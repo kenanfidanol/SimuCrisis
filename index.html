@@ -1,91 +1,104 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SimuCrisis — VR Pandemic Dashboard</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SimuCrisis Webpage</title>
+
 <style>
-:root{--bg:#0b1220;--panel:#0f172a;--muted:#94a3b8;--text:#e5e7eb;--brand:#22d3ee;--line:rgba(255,255,255,.08);--r:16px;--max:1160px;--sh:0 10px 30px rgba(0,0,0,.45)}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,Roboto,system-ui,sans-serif}
-a{color:#22d3ee;text-decoration:none}a:hover{text-decoration:underline}
-.container{max-width:var(--max);margin:auto;padding:24px}
-body::before{content:"";position:fixed;inset:0;z-index:-2;background:
-  linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px) 0 0/48px 48px,
-  linear-gradient(0deg, rgba(255,255,255,.03) 1px,transparent 1px) 0 0/48px 48px,
-  radial-gradient(1100px 500px at 70% 20%, rgba(100,116,139,.15), transparent 60%),
-  radial-gradient(900px 500px at 10% 75%, rgba(148,163,184,.12), transparent 60%),
-  linear-gradient(180deg,#0b1220,#0a0f1a 60%,#060a14)}
-.hotspots{position:fixed;inset:0;pointer-events:none;z-index:-1}
-.hotspot{position:absolute;width:18px;height:18px;border-radius:50%;
-  background:radial-gradient(circle, rgba(244,63,94,.95) 0%, rgba(244,63,94,.55) 40%, transparent 70%);
-  box-shadow:0 0 30px 12px rgba(244,63,94,.35);animation:pulse 2.6s ease-in-out infinite}
-.hotspot:nth-child(1){left:12%;top:20%}.hotspot:nth-child(2){left:28%;top:36%;animation-delay:.3s}
-.hotspot:nth-child(3){left:58%;top:44%;animation-delay:.6s}.hotspot:nth-child(4){left:76%;top:70%;animation-delay:.9s}
-.hotspot:nth-child(5){left:35%;top:68%;animation-delay:1.2s}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.35);opacity:1}}
-.nav{position:sticky;top:0;z-index:10;background:rgba(2,6,23,.65);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.nav .inner{display:flex;align-items:center;justify-content:space-between;gap:16px}
-.brand{display:flex;align-items:center;gap:12px}.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#22d3ee,#38bdf8);box-shadow:var(--sh)}
-.links a{margin:0 10px;color:var(--text);opacity:.9}.links a:hover{opacity:1}
-.hero{padding:42px 24px}.pill{display:inline-flex;gap:8px;align-items:center;font-size:13px;color:#cbd5e1;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(15,23,42,.6)}
-.hero h1{font-size:clamp(28px,4.5vw,44px);margin:12px 0}.hero p{color:#cbd5e1;max-width:900px}
-.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
-.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:rgba(15,23,42,.8);box-shadow:var(--sh);color:var(--text)}
-.btn.primary{background:linear-gradient(135deg,#22d3ee,#38bdf8);color:#001018;border:none}
-.grid{display:grid;gap:18px}.cols-2{grid-template-columns:repeat(2,1fr)}.cols-3{grid-template-columns:repeat(3,1fr)}
-.panel{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--sh)}
-h2{margin:0 0 10px;font-size:26px}footer{border-top:1px solid var(--line);color:#94a3b8;padding:24px}
-@media (max-width:900px){.cols-2,.cols-3{grid-template-columns:1fr}}
-</style></head><body>
-<div class="hotspots"><div class="hotspot"></div><div class="hotspot"></div><div class="hotspot"></div><div class="hotspot"></div><div class="hotspot"></div></div>
-<div class="nav"><div class="container inner">
-  <div class="brand"><div class="logo" aria-hidden="true"></div><strong>SimuCrisis</strong></div>
-  <div class="links"><a href="#about">About</a><a href="#features">Features</a><a href="#demo">VR Demo</a><a href="#team">Team</a><a href="#docs">Docs</a><a href="#contact">Contact</a></div>
-</div></div>
+/* Background style (soft Covid image + white overlay) */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: 
+    linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.92)),
+    url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Coronaviruses_004_lores.jpg/1280px-Coronaviruses_004_lores.jpg')
+    center/cover no-repeat fixed;
+}
 
-<header class="hero container">
-  <span class="pill">VR • Unity • Data-Driven</span>
-  <h1>SimuCrisis — VR Pandemic Simulation & Crisis Response</h1>
-  <p><b>EN:</b> Immersive city-scale scenarios with hotspot visualization. Experiment with lockdowns, vaccination rollout, mobility limits, and hospital capacity — track results via heatmaps, curves, and KPIs.</p>
-  <p><b>TR:</b> Şehir ölçeğinde senaryolar ve sıcak nokta görselleştirmesi. Karantina, aşılama, hareket kısıtları ve hastane kapasitesi gibi politikaları deneyin; sonuçları ısı haritaları, eğriler ve KPI’larla izleyin.</p>
-  <div class="cta"><a class="btn primary" href="#demo">▶ Launch VR (soon)</a><a class="btn" href="#docs">📄 Proposal & Docs</a></div>
-</header>
+/* Container */
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: white;
+  padding: 35px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
 
-<section id="about" class="container"><h2>About / Hakkında</h2>
-  <div class="grid cols-2">
-    <div class="panel"><h3>What is SimuCrisis?</h3><p>Unity-based VR platform simulating virus spread and policy responses using historical datasets. Ideal for education and research.</p></div>
-    <div class="panel"><h3>Neden VR?</h3><p>VR, kararların mekânsal etkisini (semt, yoğunluk, hareket) sezgisel olarak görmenizi sağlar; öğrenmeyi hızlandırır.</p></div>
+/* Heading */
+h1, h2 {
+  color: #0056b3;
+  font-family: Verdana, sans-serif;
+}
+
+/* Section boxes */
+.section {
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+ul {
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  
+  <h1>SimuCrisis Webpage</h1>
+  <h3>Pandemic Simulation & Crisis Management Platform</h3>
+
+  <!-- TEAM -->
+  <div class="section">
+    <h2>Team Members</h2>
+    <ul>
+      <li>Yankı Ufuk Dülger – 47149468834</li>
+      <li>Muhammed Anıl Doni –</li>
+      <li>Berfin Apaçık –</li>
+      <li>Vahap Kenan Fidanol – 1937948397</li>
+    </ul>
   </div>
-</section>
 
-<section id="features" class="container"><h2>Key Features / Temel Özellikler</h2>
-  <div class="grid cols-3">
-    <div class="panel">🧪 <b>Models</b><p>SIR/SEIR, time-series; agent-based roadmap.</p></div>
-    <div class="panel">🛰️ <b>City Hotspots</b><p>Live hotspot pulses; density overlays (demo).</p></div>
-    <div class="panel">📊 <b>Analytics</b><p>Curves, heatmaps, KPIs, scenario comparison & reports.</p></div>
+  <!-- SUPERVISOR -->
+  <div class="section">
+    <h2>Supervisor</h2>
+    <p>Dr. Eren Ulu</p>
   </div>
-</section>
 
-<section id="demo" class="container"><h2>VR Demo</h2>
-  <div class="panel"><p>Upload your Unity WebGL build to <code>/unity-build/</code> and embed:</p>
-<pre style="background:#020617;border:1px solid var(--line);padding:12px;border-radius:10px;overflow:auto">
-&lt;iframe src="unity-build/index.html" width="100%" height="640"
-  allow="xr-spatial-tracking; gyroscope; accelerometer"&gt;&lt;/iframe&gt;
-</pre></div>
-</section>
-
-<section id="team" class="container"><h2>Team / Ekip</h2>
-  <div class="grid cols-2">
-    <div class="panel"><h3>Team Members</h3>
-      <ul><li>Yankı Ufuk Dülger — 47149468834</li><li>Muhammed Anıl Doni —</li><li>Berfin Apaçık —</li><li>Vahap Kenan Fidanol — 1937948397</li></ul></div>
-    <div class="panel"><h3>Supervisor & Jury</h3><p><b>Supervisor:</b> Dr. Eren Ulu</p><p><b>Jury:</b> Hakkı Gökhan İlk, (TBA)</p></div>
+  <!-- JURY -->
+  <div class="section">
+    <h2>Jury Members</h2>
+    <ul>
+      <li>Hakkı Gökhan İlk</li>
+      <li>-</li>
+    </ul>
   </div>
-</section>
 
-<section id="docs" class="container"><h2>Docs / Dokümanlar</h2>
-  <div class="panel"><ul><li>Proposal (EN/TR) — <i>to be added</i></li><li>Architecture & Data — <i>to be added</i></li><li>Validation & Tests — <i>to be added</i></li></ul></div>
-</section>
+  <!-- DESCRIPTION -->
+  <div class="section">
+    <h2>Project Description</h2>
+    <p>
+      SimuCrisis is an educational simulation platform developed with Unity to demonstrate pandemic disaster management. 
+      The system models virus spread and response strategies within a virtual population using historical data. 
+      Users act as policymakers to implement actions such as lockdowns, vaccinations, and healthcare investments.
+    </p>
+    <p>
+      Through interactive visual analytics including charts, heatmaps, and reports, the platform illustrates how different strategies 
+      influence infection rates, recovery outcomes, and resource use. The backend manages simulation results and pandemic datasets, 
+      while the Unity interface provides visualization and real-time feedback.
+    </p>
+    <p>
+      SimuCrisis targets educators, students, and researchers, offering a safe environment to explore crisis decision-making. 
+      By combining data-driven modeling with visualization, it enhances understanding of pandemic dynamics and supports preparedness.
+    </p>
+  </div>
 
-<section id="contact" class="container"><h2>Contact</h2>
-  <div class="panel"><p>Course: TED University — CMPE 491</p><p>Email: your-email@example.com</p><p>GitHub: https://github.com/kenanfidanol/SimuCrisis</p></div>
-</section>
+</div>
 
-<footer class="container">© 2025 SimuCrisis — VR Pandemic Simulation (CMPE491)</footer>
-</body></html>
+</body>
+</html>
