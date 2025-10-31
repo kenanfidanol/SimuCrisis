@@ -12,18 +12,20 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
 
+  /* 1) White overlay so text stays readable */
   background:
     linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)),
-    url("virus-pattern.png"),
+
+    /* 2) Subtle dotted “virus” pattern (pure CSS, no image) */
+    radial-gradient(circle at 12px 12px, rgba(0,0,0,0.06) 2px, transparent 3px) 0 0 / 24px 24px,
+
+    /* 3) Soft blurred lab photo (optional—remove this line if blocked) */
     url("https://images.unsplash.com/photo-1584036561584-b03c19da874c?auto=format&fit=crop&w=1600&q=60&blur=50")
-    center/cover no-repeat fixed;
+    center / cover no-repeat fixed;
 
-  background-size:
-    200px 200px,
-    cover;
-
-  background-attachment: fixed;
+  background-attachment: fixed, fixed, fixed; /* keep layers steady */
 }
+
 
 /* Content card */
 .container {
