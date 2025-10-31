@@ -1,38 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>SimuCrisis Webpage</title>
 
 <style>
-/* Background style (soft Covid image + white overlay) */
+/* Clean academic + subtle pandemic background */
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
 
-  /* Soft clean base */
   background:
-    linear-gradient(rgba(255,255,255,0.90), rgba(255,255,255,0.90)),
-    
-    /* VERY faint virus pattern */
-    url('https://i.imgur.com/Jy2bH0N.png'),
-
-    /* Subtle medical lab / pandemic blur */
-    url('https://images.unsplash.com/photo-1584036561584-b03c19da874c?blur=40')
+    linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)),
+    url("virus-pattern.png"),
+    url("https://images.unsplash.com/photo-1584036561584-b03c19da874c?auto=format&fit=crop&w=1600&q=60&blur=50")
     center/cover no-repeat fixed;
 
-  /* Pattern size & blending */
   background-size:
-    180px 180px,  /* virus pattern spacing */
+    200px 200px,
     cover;
 
-  mix-blend-mode: normal;
+  background-attachment: fixed;
 }
 
-
-/* Container */
+/* Content card */
 .container {
   max-width: 900px;
   margin: 40px auto;
@@ -42,29 +35,27 @@ body {
   box-shadow: 0 0 20px rgba(0,0,0,0.15);
 }
 
-/* Heading */
+/* Headings */
 h1, h2 {
   color: #0056b3;
   font-family: Verdana, sans-serif;
 }
 
-/* Section boxes */
+/* Section styling */
 .section {
   margin-bottom: 25px;
   padding-bottom: 10px;
   border-bottom: 1px solid #ccc;
 }
 
-ul {
-  margin-top: 10px;
-}
+ul { margin-top: 10px; }
 </style>
 </head>
 
 <body>
 
 <div class="container">
-  
+
   <h1>SimuCrisis Webpage</h1>
   <h3>Pandemic Simulation & Crisis Management Platform</h3>
 
@@ -72,10 +63,10 @@ ul {
   <div class="section">
     <h2>Team Members</h2>
     <ul>
-      <li>Yankı Ufuk Dülger – 47149468834</li>
-      <li>Muhammed Anıl Doni –</li>
-      <li>Berfin Apaçık –</li>
-      <li>Vahap Kenan Fidanol – 1937948397</li>
+      <li>Yankı Ufuk Dülger — 47149468834</li>
+      <li>Muhammed Anıl Doni —</li>
+      <li>Berfin Apaçık —</li>
+      <li>Vahap Kenan Fidanol — 1937948397</li>
     </ul>
   </div>
 
