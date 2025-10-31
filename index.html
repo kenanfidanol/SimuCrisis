@@ -3,70 +3,95 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SimuCrisis — Project Proposal (VR Pandemic Simulation)</title>
-<meta name="description" content="SimuCrisis: Unity-based VR pandemic simulation & crisis management platform — CMPE491 Project Proposal.">
+<title>SimuCrisis — VR Pandemic Dashboard</title>
+<meta name="description" content="SimuCrisis: Unity-based VR pandemic simulation with city-like map background and hotspot visualization.">
 <style>
   :root{
-    --bg: #ffffff;
-    --surface: #f7f9fc;
-    --card: #ffffff;
-    --text: #0f172a;
-    --muted:#64748b;
-    --brand:#0b5ed7;      /* academic blue */
-    --accent:#0891b2;     /* medical teal */
-    --line:#e5e7eb;
+    --bg:#0b1220;    /* dark navy */
+    --panel:#0f172a; /* slate-900 */
+    --muted:#94a3b8; /* slate-400 */
+    --text:#e5e7eb;  /* gray-200 */
+    --brand:#22d3ee; /* cyan */
+    --accent:#f43f5e;/* rose */
+    --line:rgba(255,255,255,.08);
     --radius:16px;
-    --shadow: 0 10px 24px rgba(2,8,23,.06);
-    --max: 1080px;
+    --shadow:0 10px 30px rgba(0,0,0,.45);
+    --max:1160px;
   }
   *{box-sizing:border-box}
-  html,body{margin:0;font-family: ui-sans-serif, system-ui, Segoe UI, Roboto, Arial; color:var(--text); background:var(--bg)}
-  a{color:var(--brand); text-decoration:none}
+  html,body{margin:0;color:var(--text);font-family:Inter,Segoe UI,Roboto,system-ui,sans-serif;background:var(--bg)}
+  a{color:var(--brand);text-decoration:none}
   a:hover{text-decoration:underline}
-  .container{max-width:var(--max); margin:auto; padding:24px}
-  /* Background (soft coronavirus micrograph) */
+  .container{max-width:var(--max);margin:auto;padding:24px}
+  /* “Map” background: grid + subtle roads, plus hotspots */
   body::before{
     content:"";
-    position:fixed; inset:0;
+    position:fixed; inset:0; z-index:-2;
     background:
-      linear-gradient(to bottom right, rgba(255,255,255,.92), rgba(247,249,252,.92)),
-      url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Coronaviruses_004_lores.jpg/1280px-Coronaviruses_004_lores.jpg') center/cover no-repeat;
-    z-index:-1;
-    filter: saturate(0.9) contrast(1.05) brightness(1.05);
+      /* roads / blocks */
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px) 0 0/48px 48px,
+      linear-gradient(0deg,  rgba(255,255,255,.03) 1px, transparent 1px) 0 0/48px 48px,
+      radial-gradient(1200px 600px at 70% 20%, rgba(100,116,139,.15), transparent 60%),
+      radial-gradient(900px 500px at 10% 75%, rgba(148,163,184,.12), transparent 60%),
+      linear-gradient(180deg, #0b1220, #0a0f1a 60%, #060a14);
+    filter: saturate(1) contrast(1.05);
+  }
+  /* Hotspots layer */
+  .hotspots{position:fixed; inset:0; pointer-events:none; z-index:-1}
+  .hotspot{
+    position:absolute; width:18px; height:18px; border-radius:50%;
+    background: radial-gradient(circle, rgba(244,63,94,.95) 0%, rgba(244,63,94,.55) 40%, transparent 70%);
+    box-shadow: 0 0 30px 12px rgba(244,63,94,.35);
+    animation: pulse 2.6s ease-in-out infinite;
+  }
+  .hotspot:nth-child(2){left:22%; top:32%; animation-delay:.3s}
+  .hotspot:nth-child(3){left:58%; top:44%; animation-delay:.6s}
+  .hotspot:nth-child(4){left:76%; top:70%; animation-delay:.9s}
+  .hotspot:nth-child(5){left:35%; top:68%; animation-delay:1.2s}
+  @keyframes pulse{
+    0%,100%{transform:scale(1); opacity:.9}
+    50%{transform:scale(1.35); opacity:1}
   }
   /* Nav */
-  .nav{background:rgba(255,255,255,.8); backdrop-filter: blur(8px); border-bottom:1px solid var(--line)}
+  .nav{position:sticky; top:0; z-index:10; background:rgba(2,6,23,.65); backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
   .nav .inner{display:flex; align-items:center; justify-content:space-between; gap:16px}
   .brand{display:flex; align-items:center; gap:12px}
-  .logo{width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--brand),var(--accent)); box-shadow:var(--shadow)}
-  .links a{margin:0 10px; color:#0f172a}
-  .links a:hover{color:var(--brand)}
+  .logo{width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--brand),#38bdf8); box-shadow:var(--shadow)}
+  .links a{margin:0 10px; color:var(--text); opacity:.9}
+  .links a:hover{opacity:1}
   /* Hero */
-  .hero{padding:36px 24px}
-  .hero h1{font-size:clamp(28px,4vw,40px); margin:10px 0}
-  .hero p{color:var(--muted); max-width:860px}
-  .badges{display:flex; gap:10px; flex-wrap:wrap; margin:14px 0}
-  .badge{font-size:13px; border:1px solid var(--line); padding:6px 10px; border-radius:999px; background:var(--surface)}
+  .hero{padding:42px 24px}
+  .pill{display:inline-flex; gap:8px; align-items:center; font-size:13px; color:var(--muted);
+        padding:6px 10px; border-radius:999px; border:1px solid var(--line); background:rgba(15,23,42,.6)}
+  .hero h1{font-size:clamp(28px,4.5vw,44px); margin:12px 0}
+  .hero p{color:#cbd5e1; max-width:900px}
   .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:14px}
-  .btn{display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:12px; border:1px solid var(--line); background:#fff; box-shadow:var(--shadow); color:#0f172a; text-decoration:none}
-  .btn.primary{background:linear-gradient(135deg,var(--brand),var(--accent)); color:#fff; border:none}
-  /* Cards */
+  .btn{display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:12px; border:1px solid var(--line); background:rgba(15,23,42,.8); box-shadow:var(--shadow); color:var(--text)}
+  .btn.primary{background:linear-gradient(135deg,var(--brand),#38bdf8); color:#001018; border:none}
+  /* Panels */
   .grid{display:grid; gap:18px}
-  .cols-2{grid-template-columns: repeat(2,1fr)}
-  .cols-3{grid-template-columns: repeat(3,1fr)}
-  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px}
-  .card h3{margin:6px 0 6px}
+  .cols-2{grid-template-columns:repeat(2,1fr)}
+  .cols-3{grid-template-columns:repeat(3,1fr)}
+  .panel{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow)}
   h2{margin:0 0 10px; font-size:26px}
-  p{line-height:1.6}
-  /* Footer */
+  .kpi{display:flex; align-items:center; gap:10px; color:#e2e8f0}
+  .kpi b{font-size:22px}
   footer{border-top:1px solid var(--line); color:var(--muted); padding:24px}
-  /* Responsive */
   @media (max-width: 900px){
     .cols-2, .cols-3{grid-template-columns:1fr}
   }
 </style>
 </head>
 <body>
+  <!-- Hotspots layer (visual only) -->
+  <div class="hotspots">
+    <div class="hotspot" style="left:12%; top:20%"></div>
+    <div class="hotspot"></div>
+    <div class="hotspot"></div>
+    <div class="hotspot"></div>
+    <div class="hotspot"></div>
+  </div>
+
   <!-- Nav -->
   <div class="nav">
     <div class="container inner">
@@ -87,12 +112,106 @@
 
   <!-- Hero -->
   <header class="hero container">
-    <div class="badges">
-      <span class="badge">Unity</span>
-      <span class="badge">VR Simulation</span>
-      <span class="badge">Education & Research</span>
+    <span class="pill">VR • Unity • Data-Driven</span>
+    <h1>SimuCrisis — VR Pandemic Simulation & Crisis Response</h1>
+    <p><b>EN:</b> Immersive city-scale scenarios with hotspot visualization. Experiment with lockdowns, vaccination rollout, mobility limits, and hospital capacity — track results via heatmaps, curves, and KPIs.</p>
+    <p><b>TR:</b> Şehir ölçeğinde senaryolar ve sıcak nokta görselleştirmesiyle sürükleyici VR deneyimi. Karantina, aşılama, hareket kısıtları ve hastane kapasitesi gibi politikaları deneyin; sonuçları ısı haritaları, eğriler ve KPI’larla izleyin.</p>
+    <div class="cta">
+      <a class="btn primary" href="#demo">▶ Launch VR (soon)</a>
+      <a class="btn" href="#docs">📄 Proposal & Docs</a>
     </div>
-    <h1>SimuCrisis — VR Pandemic Simulation & Crisis Management</h1>
-    <p><b>EN:</b> Explore pandemic dynamics in VR. Test policies like lockdowns, vaccination, and healthcare allocation, and observe real-time outcomes via dashboards, heatmaps, and reports.</p>
-    <p><b>TR:</b> Pandemi
+  </header>
+
+  <!-- About -->
+  <section id="about" class="container">
+    <h2>About / Hakkında</h2>
+    <div class="grid cols-2">
+      <div class="panel">
+        <h3>What is SimuCrisis?</h3>
+        <p>Unity-based VR platform simulating virus spread and policy responses using historical datasets. Ideal for education and research.</p>
+      </div>
+      <div class="panel">
+        <h3>Neden VR?</h3>
+        <p>VR, kararların mekânsal etkisini (semt, yoğunluk, hareket) sezgisel olarak görmenizi sağlar; öğrenmeyi hızlandırır.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="container">
+    <h2>Key Features / Temel Özellikler</h2>
+    <div class="grid cols-3">
+      <div class="panel">
+        <div class="kpi">🧪 <b>Models</b></div>
+        <p>SIR/SEIR, time-series; agent-based path on the roadmap.</p>
+      </div>
+      <div class="panel">
+        <div class="kpi">🛰️ <b>City Hotspots</b></div>
+        <p>Faux map with live hotspot pulses; density overlays (demo).</p>
+      </div>
+      <div class="panel">
+        <div class="kpi">📊 <b>Analytics</b></div>
+        <p>Curves, heatmaps, KPIs, scenario comparison & reporting.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo -->
+  <section id="demo" class="container">
+    <h2>VR Demo</h2>
+    <div class="panel">
+      <p>WebGL/VR build placeholder. Upload your Unity WebGL build to <code>/unity-build/</code> and iframe it below.</p>
+      <pre style="background:#020617;border:1px solid var(--line);padding:12px;border-radius:10px;overflow:auto">
+&lt;iframe src="unity-build/index.html" width="100%" height="640" allow="xr-spatial-tracking; gyroscope; accelerometer"&gt;&lt;/iframe&gt;
+      </pre>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section id="team" class="container">
+    <h2>Team / Ekip</h2>
+    <div class="grid cols-2">
+      <div class="panel">
+        <h3>Team Members</h3>
+        <ul>
+          <li>Yankı Ufuk Dülger — 47149468834</li>
+          <li>Muhammed Anıl Doni —</li>
+          <li>Berfin Apaçık —</li>
+          <li>Vahap Kenan Fidanol — 1937948397</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Supervisor & Jury</h3>
+        <p><b>Supervisor:</b> Dr. Eren Ulu</p>
+        <p><b>Jury:</b> Hakkı Gökhan İlk, (TBA)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Docs -->
+  <section id="docs" class="container">
+    <h2>Docs / Dokümanlar</h2>
+    <div class="panel">
+      <ul>
+        <li>Proposal (EN/TR) — <i>to be added</i></li>
+        <li>Architecture & Data — <i>to be added</i></li>
+        <li>Validation & Tests — <i>to be added</i></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="container">
+    <h2>Contact</h2>
+    <div class="panel">
+      <p>Course: TED University — CMPE 491</p>
+      <p>Email: <a href="mailto:your-email@example.com">your-email@example.com</a></p>
+      <p>GitHub: <a href="https://github.com/kenanfidanol/SimuCrisis">Repository Link</a></p>
+    </div>
+  </section>
+
+  <footer class="container" style="color:var(--muted)">© 2025 SimuCrisis — VR Pandemic Simulation (CMPE491)</footer>
+</body>
+</html>
+
 
