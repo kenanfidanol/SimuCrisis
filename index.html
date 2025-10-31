@@ -11,11 +11,26 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background: 
-    linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.92)),
-    url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Coronaviruses_004_lores.jpg/1280px-Coronaviruses_004_lores.jpg')
+
+  /* Soft clean base */
+  background:
+    linear-gradient(rgba(255,255,255,0.90), rgba(255,255,255,0.90)),
+    
+    /* VERY faint virus pattern */
+    url('https://i.imgur.com/Jy2bH0N.png'),
+
+    /* Subtle medical lab / pandemic blur */
+    url('https://images.unsplash.com/photo-1584036561584-b03c19da874c?blur=40')
     center/cover no-repeat fixed;
+
+  /* Pattern size & blending */
+  background-size:
+    180px 180px,  /* virus pattern spacing */
+    cover;
+
+  mix-blend-mode: normal;
 }
+
 
 /* Container */
 .container {
