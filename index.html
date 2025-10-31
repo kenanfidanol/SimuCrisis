@@ -13,13 +13,12 @@
     font-family: Arial, sans-serif;
 
     background:
-      /* adjust 0.75 → 0.65 to show more of the image, 0.85 to make it softer */
-      linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)),
+      /* Increased visibility: 0.65 */
+      linear-gradient(rgba(255,255,255,0.50), rgba(255,255,255,0.50)),
       url("https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1600&q=60")
       center/cover no-repeat fixed;
 
     background-attachment: fixed;
-    /* optional depth-of-field look; remove if you prefer sharper */
     backdrop-filter: blur(2px);
   }
 
@@ -33,30 +32,44 @@
     box-shadow: 0 6px 24px rgba(0,0,0,0.12);
   }
 
-  /* --- Typo / layout --- */
+  /* --- Headings in dark red --- */
   h1, h2 {
-    color: #0b5ed7; /* academic blue */
+    color: #8b0000; /* dark pandemic red */
     font-family: Verdana, sans-serif;
     margin-top: 0;
   }
   h1 { text-align: center; margin-bottom: 8px; }
-  h3 { margin-top: 0; }
+  h3 {
+    color: #8b0000;
+    margin-top: 0;
+    font-weight: bold;
+  }
 
+  /* Section style */
   .section {
     margin: 20px 0 10px;
     padding-bottom: 12px;
     border-bottom: 1px solid #e2e8f0;
   }
 
+  /* List style */
   ul { margin-top: 10px; }
 
-  /* --- Dash prefix for description paragraphs --- */
-  .dash { margin: 0 0 12px; line-height: 1.55; }
-  .dash::before { content: "– "; }  /* en dash */
+  /* Dash paragraphs */
+  .dash {
+    margin: 0 0 12px;
+    line-height: 1.55;
+  }
+  .dash::before {
+    content: "– ";
+  }
 
-  /* small screen tweaks */
+  /* Responsive design */
   @media (max-width: 600px) {
-    .container { margin: 20px 12px; padding: 22px; }
+    .container {
+      margin: 20px 12px;
+      padding: 22px;
+    }
   }
 </style>
 </head>
@@ -71,8 +84,8 @@
       <h2>Team Members</h2>
       <ul>
         <li>Yankı Ufuk Dülger — 47149468834</li>
-        <li>Muhammed Anıl Doni —</li>
-        <li>Berfin Apaçık —</li>
+        <li>Muhammed Anıl Doni — 30641397092</li>
+        <li>Berfin Apaçık — 12002123236</li>
         <li>Vahap Kenan Fidanol — 1937948397</li>
       </ul>
     </div>
@@ -96,23 +109,18 @@
       <h2>Project Description</h2>
 
       <p class="dash">
-        SimuCrisis is an educational simulation platform developed with Unity to demonstrate pandemic disaster management.
-        The system models virus spread and response strategies within a virtual population using historical data. Users act
-        as policymakers to implement actions such as lockdowns, vaccinations, and healthcare investments.
+        SimuCrisis is an educational simulation platform developed with Unity to demonstrate pandemic disaster management. The system models virus spread and response strategies within a virtual population using historical data. Users act as policymakers to implement actions such as lockdowns, vaccinations, and healthcare investments.
       </p>
 
       <p class="dash">
-        Through interactive visual analytics including charts, heatmaps, and reports, the platform illustrates how different
-        strategies influence infection rates, recovery outcomes, and resource use. The backend manages simulation results and
-        pandemic datasets, while the Unity interface provides visualization and real-time feedback.
+        Through interactive visual analytics including charts, heatmaps, and reports, the platform illustrates how different strategies influence infection rates, recovery outcomes, and resource use. The backend manages simulation results and pandemic datasets, while the Unity interface provides visualization and real-time feedback.
       </p>
 
       <p class="dash">
-        SimuCrisis targets educators, students, and researchers, offering a safe environment to explore crisis decision-making.
-        By combining data-driven modeling with visualization, the project enhances understanding of pandemic dynamics and
-        supports educational and institutional preparedness.
+        SimuCrisis targets educators, students, and researchers, offering a safe environment to explore crisis decision-making. By combining data-driven modeling with visualization, the project enhances understanding of pandemic dynamics and supports educational and institutional preparedness.
       </p>
     </div>
   </div>
 </body>
 </html>
+
