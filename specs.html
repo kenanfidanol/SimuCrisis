@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SimuCrisis – Project Specifications Report</title>
+<style>
+  /* match your current site look */
+  body{
+    margin:0; font-family: Arial, sans-serif;
+    background:
+      linear-gradient(rgba(255,255,255,0.65), rgba(255,255,255,0.65)),
+      url("https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1600&q=60")
+      center/cover no-repeat fixed;
+    background-attachment: fixed;
+    backdrop-filter: blur(2px);
+  }
+  .page{max-width: 980px; margin:40px auto; background:#fff; padding:32px; border-radius:18px; box-shadow:0 6px 24px rgba(0,0,0,.12)}
+  h1,h2,h3{color:#8b0000; font-family: Verdana, sans-serif; margin-top:0}
+  h1{text-align:center}
+  .meta{margin:6px 0 18px; color:#111}
+  .section{margin:22px 0; line-height:1.6}
+  .bul{margin:8px 0 0 18px}
+  .sep{border:none; border-top:1px solid #e2e8f0; margin:18px 0}
+  .btn{display:inline-block; padding:10px 14px; border-radius:10px; border:1px solid #8b0000; color:#8b0000; text-decoration:none}
+  .btn:hover{background:#8b0000; color:#fff}
+  code{background:#f6f8fa; padding:2px 6px; border-radius:6px}
+</style>
+</head>
+<body>
+  <div class="page">
+    <h1>SimuCrisis – Project Specifications Report</h1>
+    <div class="meta">
+      <b>TED University – CMPE 491</b><br/>
+      <b>Date:</b> 07.11.2025<br/>
+      <b>Project Title:</b> SimuCrisis – Pandemic Disaster Management Simulation<br/>
+      <b>Team Members:</b><br/>
+      • Yankı Ufuk Dülger – 47149468834<br/>
+      • Muhammed Anıl Doni – 30641397092<br/>
+      • Berfin Apaçık – 12002123236<br/>
+      • Vahap Kenan Fidanol – 1937948397<br/>
+      <b>Supervisor:</b> Eren Ulu<br/>
+      <b>Jury Members:</b> Hakkı Gökhan İlk and Ayşe Yasemin Seydim<br/>
+      <b>Course Coordinator:</b> Gökçe Nur Yılmaz<br/>
+      <b>Project Webpage:</b> <a href="https://kenanfidanol.github.io/SimuCrisis/#features">https://kenanfidanol.github.io/SimuCrisis/#features</a>
+    </div>
+
+    <hr class="sep"/>
+
+    <div class="section">
+      <h2>1. Introduction</h2>
+      <p>In today’s world, the ability to manage health crises is very important. Pandemics affect many parts of life such as health, economy, and social structure. SimuCrisis is an educational simulation that helps people understand how different decisions during a pandemic can change the results. The project is developed with Unity and uses data and simple disease models to show how viruses spread and how management decisions work. Through this system, users can test ideas like lockdowns, vaccination plans, or increasing hospital capacity and see how these decisions affect infection rates and healthcare systems.</p>
+      <p>SimuCrisis gives users an interactive and visual way to explore crisis management. It provides graphs, heatmaps, and reports to show how the situation changes over time. The goal is to make learning about pandemics easier for educators, researchers, and policymakers. The project combines scientific models with an easy-to-use interface to support better understanding and awareness.</p>
+    </div>
+
+    <div class="section">
+      <h3>1.1 Description</h3>
+      <p>SimuCrisis is a digital simulation tool that lets users control and observe a virtual population during a pandemic. Users can change values like infection rate, recovery time, or medical capacity, and see the results instantly. They can apply actions such as closing schools, setting restrictions, or starting vaccination programs. The program then calculates the new situation and shows the effects visually in real time.</p>
+      <p>The purpose of SimuCrisis is to help users understand how different strategies work and what challenges decision-makers face. It focuses on being simple, flexible, and informative so that it can be used in both classrooms and research studies.</p>
+    </div>
+
+    <div class="section">
+      <h3>1.2 Constraints</h3>
+      <p>The project must follow several important limits such as economic, environmental, social, political, ethical, health, manufacturability, and sustainability factors. These help make sure that the system is realistic, responsible, and long-lasting.</p>
+      <p><b>Economic Constraints:</b> The project is developed with limited time and resources. Unity’s free version is used to avoid licensing costs. Free or open-source data and tools are preferred to keep the budget low. The team also focuses on performance optimization to make sure the program runs smoothly on normal computers.</p>
+      <p><b>Environmental Constraints:</b> Even though the system does not affect the environment directly, energy use is minimized. SimuCrisis is designed to use local data processing instead of heavy cloud services to reduce energy consumption.</p>
+      <p><b>Social Constraints:</b> Because the topic of pandemics can be sensitive, the project avoids spreading misinformation or fear. It uses neutral, educational examples and includes accessibility-friendly design such as readable fonts, clear colors, and simple navigation.</p>
+      <p><b>Political Constraints:</b> Every country handles pandemics differently, so SimuCrisis does not copy or promote any real country’s policies. All situations are fictional and created for learning only.</p>
+      <p><b>Ethical Constraints:</b> The simulation is not a real-world prediction tool. It only helps users understand how pandemics behave under simple models. All data used is public or artificial. No personal or private health data is collected or shown.</p>
+      <p><b>Health and Safety Constraints:</b> SimuCrisis is not a medical or diagnostic program. It only presents educational visualizations about virus spread and recovery. It includes clear warnings so users know it is not for professional use.</p>
+      <p><b>Manufacturability Constraints:</b> The program is made with a modular structure so new data and features can be added easily. The first release is focused on desktop computers, but a web version may be developed later.</p>
+      <p><b>Sustainability Constraints:</b> The code and data handling follow clean, maintainable design rules. The system is built to support future improvements and can be reused for similar crisis simulations such as earthquakes or climate disasters.</p>
+    </div>
+
+    <div class="section">
+      <h3>1.3 Professional and Ethical Issues</h3>
+      <p>SimuCrisis follows professional and ethical principles from the ACM and IEEE codes. It focuses on honesty, fairness, and responsibility in both data use and system design.</p>
+      <p><b>Accuracy and Transparency:</b> All formulas, data sources, and assumptions will be clearly explained in the documentation. This helps users understand how results are calculated and where the limits are.</p>
+      <p><b>Fairness and Neutrality:</b> The project will not show any cultural or political bias. All simulations stay general and balanced, only for learning purposes.</p>
+      <p><b>Privacy and Data Use:</b> Only public or artificial data will be used. The system does not store or process any personal information.</p>
+      <p><b>Professional Responsibility:</b> The team will stay honest about the system’s abilities and limits. They will make sure the simulation works as described and does not mislead users.</p>
+      <p><b>Public Welfare:</b> Since the project includes health-related content, it clearly states that it is only an educational tool and not a replacement for medical or professional advice.</p>
+    </div>
+
+    <div class="section">
+      <h2>2. Requirements</h2>
+      <h3>Functional Requirements</h3>
+      <ul class="bul">
+        <li>The system should simulate virus spread based on infection, recovery, and contact rates.</li>
+        <li>It should let users apply strategies like lockdowns, vaccination, and healthcare investments.</li>
+        <li>It should display real-time graphs showing infections, deaths, and hospital usage.</li>
+        <li>It should allow users to compare different policy results.</li>
+        <li>It should include example data from past pandemics such as COVID-19 and H1N1.</li>
+      </ul>
+      <h3>Non-Functional Requirements</h3>
+      <ul class="bul">
+        <li><b>Usability:</b> The interface should be simple and clear for teachers and students.</li>
+        <li><b>Performance:</b> The program should run smoothly and respond quickly.</li>
+        <li><b>Maintainability:</b> The code should be modular and easy to update.</li>
+        <li><b>Scalability:</b> The system should allow adding new datasets and features.</li>
+        <li><b>Reliability:</b> Results should be correct and consistent each time the simulation runs.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>3. References</h2>
+      <ol class="bul">
+        <li>ACM Code of Ethics and Professional Conduct</li>
+        <li>IEEE Computer Society, Software Engineering Code of Ethics</li>
+        <li>IEEE Code of Ethics</li>
+        <li>Stanford Encyclopedia of Philosophy, Computer and Information Ethics</li>
+        <li>World Health Organization (WHO) Pandemic Data Archives</li>
+        <li>Centers for Disease Control and Prevention (CDC) COVID-19 Data Repository</li>
+      </ol>
+    </div>
+
+    <hr class="sep"/>
+    <p>
+      <a class="btn" href="./index.html">← Back to Homepage</a>
+    </p>
+  </div>
+</body>
+</html>
