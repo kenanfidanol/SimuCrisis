@@ -13,7 +13,7 @@
     font-family: Arial, sans-serif;
 
     background:
-      /* Increased visibility: 0.65 */
+      /* Increased visibility: 0.10 for subtle virus look */
       linear-gradient(rgba(255,255,255,0.10), rgba(255,255,255,0.10)),
       url("https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1600&q=60")
       center/cover no-repeat fixed;
@@ -64,6 +64,35 @@
     content: "– ";
   }
 
+  /* Footer link + button */
+  .footer {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 10px;
+    border-top: 1px solid #e2e8f0;
+  }
+  .footer a {
+    color: #8b0000;
+    text-decoration: none;
+  }
+  .footer a:hover {
+    text-decoration: underline;
+  }
+  .button-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #8b0000;
+    color: #8b0000;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .button-link:hover {
+    background: #8b0000;
+    color: white;
+  }
+
   /* Responsive design */
   @media (max-width: 600px) {
     .container {
@@ -101,7 +130,7 @@
       <h2>Jury Members</h2>
       <ul>
         <li>Hakkı Gökhan İlk</li>
-        <li> Ayşe Yasemin Seydim</li>
+        <li>Ayşe Yasemin Seydim</li>
       </ul>
     </div>
 
@@ -111,31 +140,34 @@
 
       <p class="dash">
         SimuCrisis is an educational simulation application developed with Unity.
-The purpose of SimuCrisis application is to demonstrate pandemic disaster
-management. SimuCrisis models virus spread, response strategies within a
-virtual population using historical data. Users can take actions such as
-lockdowns, vaccinations, and healthcare investments to mitigate the
-consequences of the pandemic
+        The purpose of SimuCrisis is to demonstrate pandemic disaster management.
+        It models virus spread and response strategies within a virtual population
+        using historical data. Users can take actions such as lockdowns, vaccinations,
+        and healthcare investments to mitigate the consequences of the pandemic.
       </p>
 
       <p class="dash">
-       The application shows how different prevention strategies affect infection
-rates, recovery results, and resource usage using interactive visual analytics,
-such as charts, heatmaps, and reports. The Unity interface offers real-time
-feedback and visualization, while the backend maintains simulation results and
-historical pandemic datasets.
-      </p>
-      <p class="dash">
-        SimuCrisis offers a safe environment to explore decision making about
-pandemic crises.Hence, SimuCrisis primarily targets educators, researchers and
-policymakers about pandemics. SimuCrisis enhances understanding of
-pandemic dynamics and supports educational and institutional readiness by
-combining data-driven modeling with visualization.
+        The application shows how different prevention strategies affect infection rates,
+        recovery results, and resource usage using interactive visual analytics,
+        such as charts, heatmaps, and reports. The Unity interface offers real-time feedback
+        and visualization, while the backend maintains simulation results and historical datasets.
       </p>
 
-      
+      <p class="dash">
+        SimuCrisis offers a safe environment to explore decision-making about
+        pandemic crises. It primarily targets educators, researchers, and policymakers.
+        By combining data-driven modeling with visualization, SimuCrisis enhances
+        understanding of pandemic dynamics and supports educational and institutional readiness.
+      </p>
+    </div>
+
+    <!-- FOOTER LINK TO REPORT -->
+    <div class="footer">
+      <p>
+        <a href="specs.html">📄 View Full Project Specifications Report</a>
+      </p>
+      <a class="button-link" href="specs.html">Open Report</a>
     </div>
   </div>
 </body>
 </html>
-
