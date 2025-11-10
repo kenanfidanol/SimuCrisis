@@ -49,6 +49,18 @@
   .btn:hover { background:#8b0000; color:#fff; }
 
   p { text-align: justify; }
+
+  /* ✅ Added dash class */
+  .dash {
+    margin: 0 0 12px;
+    line-height: 1.6;
+    position: relative;
+  }
+  .dash::before {
+    content: "– ";
+    color: #8b0000;
+    font-weight: bold;
+  }
 </style>
 </head>
 
@@ -60,7 +72,7 @@
     <!-- INTRODUCTION -->
     <div class="section">
       <h2>1. Introduction</h2>
-      <p class="dash"> In today’s world, the ability to manage health crises is very important. Pandemics affect many parts of life such as health, economy, and social structure. SimuCrisis is an educational simulation that helps people understand how different decisions during a pandemic can change the results. The project is developed with Unity and uses data and simple disease models to show how viruses spread and how management decisions work. Through this system, users can test ideas like lockdowns, vaccination plans, or increasing hospital capacity and see how these decisions affect infection rates and healthcare systems.</p>
+      <p class="dash">In today’s world, the ability to manage health crises is very important. Pandemics affect many parts of life such as health, economy, and social structure. SimuCrisis is an educational simulation that helps people understand how different decisions during a pandemic can change the results. The project is developed with Unity and uses data and simple disease models to show how viruses spread and how management decisions work. Through this system, users can test ideas like lockdowns, vaccination plans, or increasing hospital capacity and see how these decisions affect infection rates and healthcare systems.</p>
 
       <p class="dash">SimuCrisis gives users an interactive and visual way to explore crisis management. It provides graphs, heatmaps, and reports to show how the situation changes over time. The goal is to make learning about pandemics easier for educators, researchers, and policymakers. The project combines scientific models with an easy-to-use interface to support better understanding and awareness.</p>
     </div>
@@ -76,7 +88,7 @@
     <!-- CONSTRAINTS -->
     <div class="section">
       <h3>1.2 Constraints</h3>
-      <p class = "dash">The project must follow several important limits such as economic, environmental, social, political, ethical, health, manufacturability, and sustainability factors. These help make sure that the system is realistic, responsible, and long-lasting.</p>
+      <p class="dash">The project must follow several important limits such as economic, environmental, social, political, ethical, health, manufacturability, and sustainability factors. These help make sure that the system is realistic, responsible, and long-lasting.</p>
 
       <p><b>Economic Constraints:</b> Developed with limited resources using Unity’s free version and open-source tools to minimize cost.</p>
       <p><b>Environmental Constraints:</b> Optimized for local data processing to reduce energy use instead of relying on cloud computing.</p>
@@ -91,12 +103,12 @@
     <!-- PROFESSIONAL & ETHICAL -->
     <div class="section">
       <h3>1.3 Professional and Ethical Issues</h3>
-      <p>SimuCrisis follows professional and ethical principles from ACM and IEEE codes, emphasizing honesty, fairness, and responsibility.</p>
-      <p><b>Accuracy and Transparency:</b> Documentation explains all formulas and assumptions clearly.</p>
-      <p><b>Fairness and Neutrality:</b> No cultural or political bias; designed purely for learning.</p>
-      <p><b>Privacy and Data Use:</b> Only public or artificial data is used, no personal data collection.</p>
-      <p><b>Professional Responsibility:</b> Developers ensure the tool functions as described without misleading users.</p>
-      <p><b>Public Welfare:</b> The tool states clearly that it is not for medical or professional advice.</p>
+      <p class="dash">SimuCrisis follows professional and ethical principles from ACM and IEEE codes, emphasizing honesty, fairness, and responsibility.</p>
+      <p class="dash"><b>Accuracy and Transparency:</b> Documentation explains all formulas and assumptions clearly.</p>
+      <p class="dash"><b>Fairness and Neutrality:</b> No cultural or political bias; designed purely for learning.</p>
+      <p class="dash"><b>Privacy and Data Use:</b> Only public or artificial data is used, no personal data collection.</p>
+      <p class="dash"><b>Professional Responsibility:</b> Developers ensure the tool functions as described without misleading users.</p>
+      <p class="dash"><b>Public Welfare:</b> The tool states clearly that it is not for medical or professional advice.</p>
     </div>
 
     <!-- REQUIREMENTS -->
@@ -141,3 +153,4 @@
   </div>
 </body>
 </html>
+
