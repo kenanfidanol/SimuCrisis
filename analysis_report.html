@@ -35,8 +35,43 @@
     margin-top: 0;
   }
 
-  h1 { text-align: center; }
-  .section { margin: 20px 0; }
+  h1 {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  h3 {
+    margin-bottom: 4px;
+  }
+
+  .section {
+    margin: 20px 0 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  p {
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  ul, ol {
+    margin: 6px 0 10px 22px;
+  }
+
+  li {
+    margin-bottom: 4px;
+  }
+
+  dt {
+    font-weight: bold;
+    margin-top: 6px;
+  }
+
+  dd {
+    margin-left: 16px;
+    margin-bottom: 4px;
+  }
 
   .footer {
     text-align: center;
@@ -55,6 +90,7 @@
     text-decoration: none;
     font-weight: 600;
   }
+
   .button-link:hover {
     background: #8b0000;
     color: white;
@@ -74,18 +110,419 @@
     <h1>SimuCrisis – Analysis Report</h1>
     <h3>Group 46</h3>
 
-    <div class="content">
-      <!-- ✨ INSERT YOUR ANALYSIS REPORT TEXT HERE ✨ -->
-      <p>This page will contain the full analysis report including:</p>
+    <!-- 1. INTRODUCTION -->
+    <div class="section" id="introduction">
+      <h2>1. Introduction</h2>
+      <p>
+        SimuCrisis is a pandemic simulation program. The system is designed to provide
+        educational features, such as helping users understand how different management
+        strategies affect the spread of a virus. SimuCrisis models infections and
+        recoveries using historical datasets.
+      </p>
+      <p>
+        The system aims to provide real-time visual feedback through charts, heatmaps,
+        and scenario reports. SimuCrisis is intended for educators, researchers, students,
+        and policymakers who want to explore extreme pandemic scenarios and ways to mitigate
+        them in a safe, controlled digital environment.
+      </p>
+      <p>
+        Initially, the project considered VR support, but after evaluation, VR was removed
+        due to limited educational added value and accessibility concerns. The system now
+        focuses entirely on a desktop Unity application.
+      </p>
+    </div>
+
+    <!-- 2. CURRENT SYSTEM -->
+    <div class="section" id="current-system">
+      <h2>2. Current System</h2>
+      <p>
+        There is no existing system that SimuCrisis is built upon. All components are being
+        developed from scratch.
+      </p>
+
+      <!-- 2.1 DATA INPUT SYSTEM -->
+      <h3>2.1 Data Input System</h3>
+      <ol>
+        <li>
+          <strong>User (Actor)</strong>
+          <ul>
+            <li>
+              The User interacts with the system by selecting datasets, loading predefined
+              scenarios, or entering simulation parameters (infection rate, recovery time,
+              population size, etc.).
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Data Input Interface (Component)</strong>
+          <ul>
+            <li>Collects numerical and categorical inputs from the User.</li>
+            <li>Validates user input (value ranges, data type consistency).</li>
+            <li>Sends the validated input to the Simulation Core.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Dataset Module (Component)</strong>
+          <ul>
+            <li>Stores historical pandemic datasets (e.g., COVID-19, H1N1).</li>
+            <li>Provides structured data to the Data Input Interface.</li>
+            <li>Validates dataset format and readiness for simulation.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <p><strong>Process Flow:</strong></p>
+      <ol>
+        <li>User selects a dataset or enters custom parameters.</li>
+        <li>Data Input Interface validates all inputs.</li>
+        <li>Dataset Module loads relevant files or values.</li>
+        <li>Validated data is passed to the Simulation Core to begin the simulation run.</li>
+      </ol>
+
+      <p><strong>Arrows and Communication:</strong></p>
       <ul>
-        <li>Current System</li>
-        <li>Proposed System</li>
-        <li>Functional & Non-Functional Requirements</li>
-        <li>System Models (Use Case, Class, Dynamic Models)</li>
-        <li>Glossary & References</li>
+        <li>Arrows show the flow of parameter data from User → Interface → Dataset Module → Simulation Core.</li>
+        <li>Dashed lines indicate repeated parameter adjustments before the simulation begins.</li>
       </ul>
 
-      <p>You can paste your full report here from the PDF.</p>
+      <!-- 2.2 POPULATION SIMULATION PROCESSING -->
+      <h3>2.2 Population Simulation Processing</h3>
+      <ol>
+        <li>
+          <strong>User (Actor)</strong>
+          <ul>
+            <li>
+              Initiates the simulation, pauses it, changes the speed, or adjusts parameters
+              during runtime.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Simulation Core (Component)</strong>
+          <ul>
+            <li>Implements the epidemiological model (e.g., SEIR or a simplified variant).</li>
+            <li>Calculates transitions between susceptible, exposed, infected, and recovered groups.</li>
+            <li>Updates simulation state at each timestep.</li>
+            <li>Processes population interactions and transmission probabilities.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Population Data Module (Component)</strong>
+          <ul>
+            <li>Stores all demographic and synthetic population characteristics.</li>
+            <li>Supplies the Simulation Core with structured population data.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <p><strong>Process Flow:</strong></p>
+      <ol>
+        <li>User starts the simulation.</li>
+        <li>Simulation Core initializes the population state.</li>
+        <li>Population Data Module provides demographic structures.</li>
+        <li>
+          Simulation Core updates infection, recovery, and fatality events at each timestep.
+        </li>
+      </ol>
+
+      <p><strong>Arrows and Communication:</strong></p>
+      <ul>
+        <li>Continuous data stream from Population Data Module to Simulation Core.</li>
+        <li>Dashed lines represent repeated update cycles during simulation runtime.</li>
+      </ul>
+
+      <!-- 2.3 VISUALIZATION PROCESSING -->
+      <h3>2.3 Visualization Processing</h3>
+      <ol>
+        <li>
+          <strong>User (Actor)</strong>
+          <ul>
+            <li>Observes charts, heatmaps, and graphs during the simulation.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Visualization Engine (Component)</strong>
+          <ul>
+            <li>Converts simulation state into visual elements.</li>
+            <li>Updates graphs in real time (infection rates, reproduction number R, hospital load).</li>
+            <li>Generates spatial heatmaps of population spread.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>UI Layer (Component)</strong>
+          <ul>
+            <li>Displays all visual output to the User.</li>
+            <li>Handles user commands such as zooming, switching graph types, or toggling layers.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <p><strong>Process Flow:</strong></p>
+      <ol>
+        <li>Simulation Core sends the updated state to the Visualization Engine.</li>
+        <li>Visualization Engine processes data into graphical objects.</li>
+        <li>UI Layer renders these visuals and updates the screen.</li>
+        <li>User interacts with the UI to change visualization settings.</li>
+      </ol>
+
+      <p><strong>Arrows and Communication:</strong></p>
+      <ul>
+        <li>Solid lines represent real-time data transfer for visual updates.</li>
+        <li>Dashed lines indicate repeated interactions from the User to adjust views.</li>
+      </ul>
+
+      <!-- 2.4 POLICY APPLICATION PROCESSING -->
+      <h3>2.4 Policy Application Processing</h3>
+      <ol>
+        <li>
+          <strong>User (Actor)</strong>
+          <ul>
+            <li>
+              Applies interventions such as lockdowns, school closures, vaccination campaigns,
+              and healthcare capacity expansion.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Policy Module (Component)</strong>
+          <ul>
+            <li>Evaluates each intervention.</li>
+            <li>
+              Calculates how the intervention modifies simulation parameters (e.g., reduced
+              contact rate).
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Simulation Core (Component)</strong>
+          <ul>
+            <li>Integrates modified parameters into the ongoing simulation.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <p><strong>Process Flow:</strong></p>
+      <ol>
+        <li>User selects a policy to apply.</li>
+        <li>Policy Module evaluates the policy impact.</li>
+        <li>Updated parameters are sent to the Simulation Core.</li>
+        <li>Simulation Core continues with adjusted dynamics.</li>
+      </ol>
+
+      <p><strong>Arrows and Communication:</strong></p>
+      <ul>
+        <li>Arrows represent communication from interventions to the Simulation Core.</li>
+        <li>Dashed arrows indicate repeated policy adjustments.</li>
+      </ul>
+
+      <!-- 2.5 SCENARIO COMPARISON PROCESSING -->
+      <h3>2.5 Scenario Comparison Processing</h3>
+      <ol>
+        <li>
+          <strong>User (Actor)</strong>
+          <ul>
+            <li>Selects two or more completed simulation runs to compare.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Scenario Manager (Component)</strong>
+          <ul>
+            <li>Loads stored scenario data.</li>
+            <li>
+              Extracts metrics such as peak infections, duration, death toll, and healthcare
+              overload.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Comparison Engine (Component)</strong>
+          <ul>
+            <li>Generates visual comparisons (side-by-side graphs, difference plots).</li>
+            <li>Highlights differences in policy effectiveness between scenarios.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <p><strong>Process Flow:</strong></p>
+      <ol>
+        <li>User selects scenarios to compare.</li>
+        <li>Scenario Manager loads stored data.</li>
+        <li>Comparison Engine generates visual outputs.</li>
+        <li>Results are displayed to the User.</li>
+      </ol>
+
+      <p><strong>Arrows and Communication:</strong></p>
+      <ul>
+        <li>Dashed lines show repeated comparisons across multiple scenarios.</li>
+      </ul>
+
+      <!-- 2.6 REPORTING AND OUTPUT PROCESSING -->
+      <h3>2.6 Reporting and Output Processing</h3>
+      <ol>
+        <li>
+          <strong>User (Actor)</strong>
+          <ul>
+            <li>Requests a simulation summary report.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Report Generator (Component)</strong>
+          <ul>
+            <li>Collects final simulation statistics.</li>
+            <li>Formats them into exportable PDF/CSV reports.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Data Storage Module (Component)</strong>
+          <ul>
+            <li>Provides simulation logs and scenario metadata.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <p><strong>Process Flow:</strong></p>
+      <ol>
+        <li>User requests a report.</li>
+        <li>Report Generator gathers the necessary data.</li>
+        <li>Data is formatted and exported in the selected format.</li>
+        <li>The report is delivered to the User.</li>
+      </ol>
+    </div>
+
+    <!-- 3. PROPOSED SYSTEM -->
+    <div class="section" id="proposed-system">
+      <h2>3. Proposed System</h2>
+
+      <h3>3.1 Overview</h3>
+      <p>
+        SimuCrisis will simulate the progression of infectious diseases in a virtual population
+        and provide real-time visual analytics. Users can test interventions and explore outcomes.
+        The system emphasizes accessibility, clarity, and educational value. VR functionality has
+        been removed due to low practical impact.
+      </p>
+
+      <h3>3.2 Functional Requirements</h3>
+      <ul>
+        <li>Simulate infection, recovery, and death dynamics.</li>
+        <li>Support adjustable parameters for the disease model.</li>
+        <li>Apply interventions such as lockdowns, vaccination, and resource expansion.</li>
+        <li>Display real-time graphs and heatmaps.</li>
+        <li>Save and load simulation scenarios.</li>
+        <li>Compare scenarios visually.</li>
+        <li>Export summary reports.</li>
+      </ul>
+
+      <h3>3.3 Non-Functional Requirements</h3>
+      <ul>
+        <li><strong>Performance:</strong> Real-time updates with minimal latency.</li>
+        <li><strong>Reliability:</strong> Consistent calculations and robust error handling.</li>
+        <li><strong>Usability:</strong> Simple user interface with easy navigation.</li>
+        <li><strong>Scalability:</strong> Ability to support additional datasets and models.</li>
+        <li><strong>Maintainability:</strong> Modular architecture to ease updates and extensions.</li>
+      </ul>
+
+      <h3>3.4 Pseudo Requirements</h3>
+      <ul>
+        <li><strong>Hardware:</strong> Standard desktop PC capable of running Unity applications.</li>
+        <li><strong>Software:</strong> Unity engine and publicly available datasets.</li>
+        <li><strong>Network:</strong> Not required, except for optional dataset updates.</li>
+        <li><strong>Training:</strong> Minimal training; user-friendly interface.</li>
+        <li><strong>Maintenance:</strong> Occasional software updates.</li>
+      </ul>
+
+      <h3>3.5 System Models</h3>
+
+      <h4>3.5.1 Scenarios</h4>
+      <ul>
+        <li><strong>Scenario 1:</strong> User simulates a pandemic with no interventions.</li>
+        <li><strong>Scenario 2:</strong> User applies lockdowns and compares outcomes.</li>
+        <li><strong>Scenario 3:</strong> User tests different vaccination strategies.</li>
+      </ul>
+
+      <h4>3.5.2 Use Case Model</h4>
+      <p><strong>Actors:</strong> User (Educator / Student / Researcher)</p>
+      <p><strong>Use Cases:</strong></p>
+      <ul>
+        <li>Modify parameters</li>
+        <li>Run simulation</li>
+        <li>Apply policies</li>
+        <li>View graphs</li>
+        <li>Save/load scenario</li>
+        <li>Compare scenarios</li>
+        <li>Export reports</li>
+      </ul>
+
+      <h4>3.5.3 Object and Class Model</h4>
+      <p><strong>Core Objects:</strong> SimulationState, PopulationGroup, Policy, Chart, Heatmap, Scenario.</p>
+      <p><strong>Class Hierarchies / Main Components:</strong></p>
+      <ul>
+        <li>Simulation Engine</li>
+        <li>Policy Module</li>
+        <li>Visualization Module</li>
+        <li>Scenario Manager</li>
+        <li>Report Generator</li>
+      </ul>
+
+      <h4>3.5.4 Dynamic Models</h4>
+      <p>
+        Dynamic behavior of the system is illustrated with sequence diagrams representing:
+      </p>
+      <ul>
+        <li>Running a simulation</li>
+        <li>Applying a policy</li>
+        <li>Generating a report</li>
+        <li>Loading scenarios</li>
+      </ul>
+
+      <h4>3.5.5 User Interface</h4>
+      <p><strong>UI Components:</strong></p>
+      <ul>
+        <li>Main dashboard</li>
+        <li>Parameter panel</li>
+        <li>Policy panel</li>
+        <li>Real-time graphs</li>
+        <li>Scenario comparison screen</li>
+        <li>Report download page</li>
+      </ul>
+    </div>
+
+    <!-- 4. GLOSSARY -->
+    <div class="section" id="glossary">
+      <h2>4. Glossary</h2>
+      <dl>
+        <dt>SEIR Model</dt>
+        <dd>A common epidemiological model that divides the population into Susceptible, Exposed, Infected, and Recovered groups.</dd>
+
+        <dt>R (Effective Reproduction Number)</dt>
+        <dd>
+          A measure of how many people, on average, a single infected person will infect
+          at a given time in the population.
+        </dd>
+
+        <dt>Scenario</dt>
+        <dd>A saved simulation state that can be reloaded and compared with other runs.</dd>
+
+        <dt>Intervention</dt>
+        <dd>
+          A user-applied strategy (e.g., lockdown, vaccination campaign, capacity expansion)
+          that modifies simulation parameters.
+        </dd>
+
+        <dt>Heatmap</dt>
+        <dd>A spatial distribution visualization showing intensity of infections across regions.</dd>
+      </dl>
+    </div>
+
+    <!-- 5. REFERENCES -->
+    <div class="section" id="references">
+      <h2>5. References</h2>
+      <ul>
+        <li>ACM Code of Ethics</li>
+        <li>IEEE Software Engineering Code of Ethics</li>
+        <li>World Health Organization (WHO) Pandemic Data</li>
+        <li>CDC COVID-19 Data</li>
+        <li>Stanford Encyclopedia of Philosophy: Information Ethics</li>
+      </ul>
     </div>
 
     <div class="footer">
@@ -94,3 +531,4 @@
   </div>
 </body>
 </html>
+
