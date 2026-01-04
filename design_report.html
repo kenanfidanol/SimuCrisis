@@ -18,9 +18,9 @@ body {
 .container {
   max-width: 900px;
   margin: 40px auto;
-  background: #fff;
+  background: #ffffff;
   padding: 40px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.15);
+  box-shadow: 0 0 14px rgba(0,0,0,0.18);
 }
 
 h2, h3 {
@@ -93,10 +93,10 @@ politicians, researchers, educators, and students.
 </ul>
 
 <h3>1.3 Definitions, acronyms, and abbreviations</h3>
-<p>The susceptible, exposed, infected, recovered epidemiological model is known as SEIR.</p>
-<p>Rt: The number of effective reproductions over time.</p>
-<p>Scenario: Initial conditions and a saved simulation setup.</p>
-<p>Intervention: A policy implemented by users (lockdown, immunization, capacity adjustments).</p>
+<p>SEIR: Susceptible, Exposed, Infected, Recovered epidemiological model.</p>
+<p>Rt: Effective reproduction number over time.</p>
+<p>Scenario: Saved simulation configuration with initial conditions.</p>
+<p>Intervention: User-defined policy action (lockdown, vaccination, capacity changes).</p>
 
 <h3>1.4 Overview</h3>
 <p>
@@ -128,44 +128,41 @@ via Report Generator and Scenario Manager.
 
 <h3>3.2 Subsystem decomposition</h3>
 <ul>
-<li>UI Layer (Unity) • Dashboard (charts/heatmap), Policy Panel, Parameter Panel, Scenario Compare</li>
-<li>Core Layer</li>
-<li>Data Layer: Simulation Core, Policy Engine, Metrics Collector, Visualization Engine,
-Scenario Manager, and Report Generator</li>
-<li>Local storage, configuration/metadata (seeds, provenance), and dataset repository</li>
+<li>UI Layer (Unity): Dashboard (charts/heatmap), Policy Panel, Parameter Panel, Scenario Comparison UI</li>
+<li>Core Layer: Simulation Core, Policy Engine, Metrics Collector, Visualization Engine</li>
+<li>Data Layer: Scenario Manager and Report Generator</li>
+<li>Local storage for datasets, scenarios, configuration metadata, and run artifacts</li>
 </ul>
 
-<h3>3.3 Hardware/software mapping</h3>
-<p><strong>Hardware:</strong> A typical desktop computer (no need for virtual reality).</p>
-<p><strong>Software:</strong> C#, Unity, Python, and local file storage; dataset packs for historical baselines are optional.</p>
+<h3>3.3 Hardware / software mapping</h3>
+<p><strong>Hardware:</strong> Standard desktop computer (no VR requirement).</p>
+<p><strong>Software:</strong> Unity (C#), optional Python for preprocessing, local file storage.</p>
 
 <h3>3.4 Persistent data management</h3>
 <p>
-SimuCrisis stores scenarios and run artifacts locally. Stored artifacts include selected
-dataset identifiers, parameter sets, intervention schedules, random seeds for
-reproducibility, and summary statistics. No personal or private health data is stored.
+SimuCrisis stores scenarios and simulation run artifacts locally. Stored data includes
+dataset identifiers, parameter configurations, intervention schedules, random seeds,
+and summary statistics. No personal or private health information is stored.
 </p>
 
 <h3>3.5 Access control and security</h3>
 <p>
-SimuCrisis runs locally and does not require user authentication in its initial release.
-Scenario files can be validated (schema checks) before loading to avoid corrupted inputs.
-Any future online sharing features would require access control and secure transport.
+The system runs locally and does not require user authentication in its initial version.
+Scenario validation mechanisms prevent corrupted or invalid configurations.
 </p>
 
 <h3>3.6 Global software control</h3>
 <p>
-The system follows an event-driven update loop. User actions (start/pause/speed changes,
-policy application) trigger events that update simulation parameters. Each timestep
-produces a snapshot that feeds metrics computation and visualization refresh.
+The system follows an event-driven control structure. User actions trigger parameter
+updates, and each simulation timestep produces a snapshot used to update metrics and
+visualizations.
 </p>
 
 <h3>3.7 Boundary conditions</h3>
 <p>
-Performance may degrade for very large population sizes or dense spatial heatmaps. To
-mitigate this, the simulation can use aggregated compartmental logic and bounded
-timestep sizes. Parameter validation prevents unstable configurations (e.g., negative rates,
-impossible capacities).
+Performance may degrade for very large population sizes. To mitigate this, aggregated
+compartment logic and bounded timestep sizes are used. Parameter validation prevents
+unstable configurations.
 </p>
 
 <div class="page-break"></div>
@@ -174,57 +171,60 @@ impossible capacities).
 
 <p><strong>Simulation Core:</strong></p>
 <ul>
-<li>Executes the SEIR epidemiological model to represent the progression of a disease within the simulated population.</li>
-<li>Inputs: Validated simulation parameters such as infection rate, recovery rate, total population size, simulation time step, and random seed.</li>
-<li>Outputs: Updated simulation state reflecting population distribution.</li>
-<li>Error Handling: Validation checks to ensure population values remain within valid ranges.</li>
+<li>Executes the SEIR epidemiological model.</li>
+<li>Updates population states at each timestep.</li>
+<li>Ensures numerical stability and validity.</li>
 </ul>
 
-<p><strong>Policy Engine</strong></p>
+<p><strong>Policy Engine:</strong></p>
 <ul>
-<li>Service: Manages user interventions and dynamically adjusts simulation parameters.</li>
-<li>Inputs: Policy Objects and current simulation state.</li>
-<li>Outputs: Parameter modifiers.</li>
-<li>Error Handling: Prevents conflicting logic or impossible values.</li>
+<li>Applies user-defined interventions.</li>
+<li>Adjusts simulation parameters dynamically.</li>
 </ul>
 
-<p><strong>Metrics Collector</strong></p>
+<p><strong>Metrics Collector:</strong></p>
 <ul>
-<li>Service: Calculates Rt, peak infections, and hospital utilization.</li>
-<li>Inputs: Simulation snapshots.</li>
-<li>Outputs: Time-series data and summary statistics.</li>
-<li>Error Handling: Safe fallback values for unstable calculations.</li>
+<li>Computes Rt, infection peaks, and healthcare utilization.</li>
 </ul>
 
-<p><strong>Visualization Engine</strong></p>
+<p><strong>Visualization Engine:</strong></p>
 <ul>
-<li>Service: Renders charts and spatial heatmaps.</li>
-<li>Inputs: Metrics and spatial data.</li>
-<li>Outputs: UI elements.</li>
-<li>Error Handling: Optimized rendering and fallback handling.</li>
+<li>Renders real-time charts and spatial heatmaps.</li>
 </ul>
 
-<p><strong>Scenario Manager</strong></p>
+<p><strong>Scenario Manager:</strong></p>
 <ul>
-<li>Service: Saves and loads simulation scenarios.</li>
-<li>Inputs: User commands and configuration objects.</li>
-<li>Outputs: Serialized JSON and runtime objects.</li>
-<li>Error Handling: Schema validation.</li>
+<li>Saves, loads, and compares simulation scenarios.</li>
 </ul>
 
-<p><strong>Report Generator</strong></p>
+<p><strong>Report Generator:</strong></p>
 <ul>
-<li>Service: Compiles final simulation statistics.</li>
-<li>Inputs: Simulation history and metadata.</li>
-<li>Outputs: PDF and CSV reports.</li>
-<li>Error Handling: File system validation.</li>
+<li>Exports simulation results in PDF and CSV formats.</li>
 </ul>
 
 <div class="page-break"></div>
 
 <h2>5. Diagrams (Architecture / Sequence / UML)</h2>
 
+<p>
+The primary design diagrams utilized in SimuCrisis are described in this section. The
+system architecture, runtime interactions, and structural arrangement of essential software
+components are all summarized in the diagrams. They enhance the written design
+description and make the system's operation more understandable.
+</p>
+
 <h3>5.1 High-Level Architecture</h3>
+<p>
+SimuCrisis is shown in the High-Level Architecture Diagram as a layered system made
+up of the UI Layer, Core Layer, and Data Layer. Modularity and distinct boundaries of
+duty are guaranteed by this division. The UI Layer does not contain simulation logic;
+instead, it manages user interaction and visualization controls. The Simulation Core,
+Policy Engine, Metrics Collector, and Visualization Engine comprise the Core Layer,
+which collectively oversees model execution, interventions, and analytics. The Data
+Layer facilitates analysis and repeatability by storing datasets, scenarios, and run
+artifacts.
+</p>
+
 <div class="diagram">
 <img src="images/high_level_architecture.png">
 <div class="caption">Figure-1 High Level Architecture Diagram</div>
@@ -233,6 +233,15 @@ impossible capacities).
 <div class="page-break"></div>
 
 <h3>5.2 Sequence Diagram – Run + Interventions</h3>
+<p>
+The interaction between system components throughout a simulation run is depicted in
+the Sequence Diagram. Model initialization in the Simulation Core comes after user
+configuration via the user interface. The simulation progresses, measurements are
+updated, and visuals are updated at each timestep. The Policy Engine calculates
+parameter changes that impact subsequent timesteps when a policy is applied. This
+illustration emphasizes how the simulation is event-driven and iterative.
+</p>
+
 <div class="diagram">
 <img src="images/sequence_diagram.png">
 <div class="caption">Figure-2 Sequence Diagram</div>
@@ -241,9 +250,19 @@ impossible capacities).
 <div class="page-break"></div>
 
 <h3>5.3 UML Class Diagram (High-Level)</h3>
+<p>
+A structural summary of the primary software classes and their connections may be found
+in the UML Class Diagram. MetricsCollector generates analytical indicators,
+PolicyEngine organizes interventions, and SimulationCore controls model state and
+advancement. While ScenarioManager and ReportGenerator facilitate export and
+persistence, VisualizationEngine concentrates on rendering outcomes. The diagram
+places a strong emphasis on modular design and loose connection, enabling future
+additions with little impact.
+</p>
+
 <div class="diagram">
 <img src="images/class_diagram.png">
-<div class="caption">Figure-3 Class Diagram</div>
+<div class="caption">Figure-3 UML Class Diagram</div>
 </div>
 
 <div class="page-break"></div>
@@ -254,24 +273,28 @@ impossible capacities).
 A spatial visualization technique used to represent the intensity or concentration of a
 specific variable across a geographic or simulated space. In SimuCrisis, heatmaps are
 primarily used to display infection density and help users visually identify high-risk or
-heavily affected areas.</p>
+heavily affected areas.
+</p>
 
 <p><strong>Scenario:</strong><br>
 A stored simulation configuration that includes initial conditions, disease parameters,
 and a predefined set of intervention policies. Scenarios allow users to reproduce
 experiments, compare different strategies, and analyze outcomes under consistent starting
-assumptions.</p>
+assumptions.
+</p>
 
 <p><strong>Intervention:</strong><br>
 A user-defined policy action applied during a simulation run to influence disease
 dynamics. Examples include lockdown measures, vaccination strategies, and healthcare
 capacity adjustments. Interventions modify simulation parameters in a controlled manner
-over time.</p>
+over time.
+</p>
 
 <p><strong>Snapshot:</strong><br>
 A representation of the complete simulation state captured at a specific timestep.
 Snapshots include population distributions, calculated metrics, and relevant system
-variables, and are used for both real-time visualization and post-simulation analysis.</p>
+variables, and are used for both real-time visualization and post-simulation analysis.
+</p>
 
 <div class="page-break"></div>
 
@@ -279,8 +302,10 @@ variables, and are used for both real-time visualization and post-simulation ana
 <p>ACM Code of Ethics and Professional Conduct.</p>
 <p>IEEE Software Engineering Code of Ethics.</p>
 <p>IEEE Code of Ethics.</p>
-<p>WHO Pandemic Data Archives; CDC COVID-19 Data Repository.</p>
+<p>WHO Pandemic Data Archives.</p>
+<p>CDC COVID-19 Data Repository.</p>
 
 </div>
 </body>
 </html>
+
