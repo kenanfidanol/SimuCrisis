@@ -1,66 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>SimuCrisis – High Level Design Report</title>
 
 <style>
   body {
     margin: 0;
-    padding: 0;
     font-family: Arial, sans-serif;
     background:
-      linear-gradient(rgba(255,255,255,0.15), rgba(255,255,255,0.15)),
+      linear-gradient(rgba(255,255,255,0.12), rgba(255,255,255,0.12)),
       url("https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1600&q=60")
       center/cover no-repeat fixed;
   }
 
   .container {
     max-width: 1000px;
-    margin: 30px auto;
+    margin: 40px auto;
     background: white;
-    padding: 25px;
-    border-radius: 16px;
+    padding: 36px;
+    border-radius: 18px;
     box-shadow: 0 6px 24px rgba(0,0,0,0.12);
   }
 
-  h1 {
+  h1, h2, h3 {
     color: #8b0000;
+    font-family: Verdana, sans-serif;
+  }
+
+  h1 {
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
+  }
+
+  h3 {
+    margin-top: 30px;
+  }
+
+  p {
+    line-height: 1.65;
+  }
+
+  ul {
+    margin-left: 20px;
+  }
+
+  .section {
+    margin-top: 35px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .diagram {
+    margin: 25px 0;
+    text-align: center;
+  }
+
+  .diagram img {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+
+  .caption {
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 6px;
   }
 
   .back {
     text-align: center;
-    margin-bottom: 15px;
+    margin-top: 40px;
   }
 
   .back a {
     color: #8b0000;
-    text-decoration: none;
     font-weight: bold;
-  }
-
-  iframe {
-    width: 100%;
-    height: 80vh;
-    border: none;
-    border-radius: 12px;
+    text-decoration: none;
   }
 </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>High Level Design Report</h1>
+<div class="container">
 
-    <div class="back">
-      <a href="index.html">← Back to Main Page</a>
-    </div>
+<h1>High Level Design Report</h1>
+<p style="text-align:center;">
+<strong>SimuCrisis – Pandemic Disaster Management Simulation</strong>
+</p>
 
-    <!-- PDF EMBED -->
-    <iframe src="CMPE491_High_Level_Design_Report_Group46.pdf"></iframe>
-  </div>
+<!-- INTRODUCTION -->
+<div class="section">
+<h2>1. Introduction</h2>
+
+<h3>1.1 Purpose of the System</h3>
+<p>
+SimuCrisis is a pandemic simulation system developed using Unity for educational and
+decision-support purposes. The system enables users to explore how pandemic management
+decisions—such as lockdowns, vaccination strategies, and healthcare capacity adjustments—
+affect virus spread and healthcare system load.
+</p>
+
+<p>
+The system targets policymakers, educators, researchers, and students who wish to gain
+insight into pandemic dynamics in a controlled, risk-free environment.
+</p>
+
+<h3>1.2 Design Goals</h3>
+<ul>
+  <li>Clear and intuitive visualization of pandemic dynamics</li>
+  <li>Compatibility with standard desktop hardware (VR excluded)</li>
+  <li>Real-time feedback for interventions</li>
+  <li>Modular, maintainable, and scalable architecture</li>
+  <li>Reproducibility using saved scenarios and random seeds</li>
+</ul>
+
+<h3>1.3 Definitions and Abbreviations</h3>
+<ul>
+  <li><strong>SEIR</strong>: Susceptible, Exposed, Infected, Recovered model</li>
+  <li><strong>Rt</strong>: Effective reproduction number</li>
+  <li><strong>Scenario</strong>: Stored simulation configuration</li>
+  <li><strong>Intervention</strong>: User-applied policy (lockdown, vaccination, etc.)</li>
+</ul>
+</div>
+
+<!-- ARCHITECTURE -->
+<div class="section">
+<h2>2. Proposed Software Architecture</h2>
+
+<p>
+SimuCrisis follows a modular, layered architecture composed of three main layers:
+User Interface Layer, Core Layer, and Data Layer. This separation ensures maintainability,
+testability, and future extensibility.
+</p>
+
+<div class="diagram">
+  <img src="images/high_level_architecture.png" alt="High Level Architecture Diagram">
+  <div class="caption">Figure 1 – High Level Architecture Diagram</div>
+</div>
+</div>
+
+<!-- SUBSYSTEMS -->
+<div class="section">
+<h2>3. Subsystem Services</h2>
+
+<h3>Simulation Core</h3>
+<p>
+Executes the SEIR epidemiological model and updates population states at each timestep.
+It validates parameters and prevents unstable simulation states.
+</p>
+
+<h3>Policy Engine</h3>
+<p>
+Processes user-defined interventions and modifies simulation parameters dynamically.
+Validates policy constraints to avoid logical conflicts.
+</p>
+
+<h3>Metrics Collector</h3>
+<p>
+Computes analytical indicators such as Rt, infection peaks, and hospital utilization.
+Provides time-series data for visualization and reporting.
+</p>
+
+<h3>Visualization Engine</h3>
+<p>
+Renders charts and spatial heatmaps that visualize infection spread and trends in real time.
+Optimized to maintain performance on standard hardware.
+</p>
+
+<h3>Scenario Manager</h3>
+<p>
+Handles saving, loading, and comparison of simulation scenarios using structured JSON files.
+</p>
+
+<h3>Report Generator</h3>
+<p>
+Exports simulation results into PDF summaries and CSV datasets for external analysis.
+</p>
+</div>
+
+<!-- SEQUENCE -->
+<div class="section">
+<h2>4. Runtime Interaction</h2>
+
+<p>
+The system operates in an event-driven loop. User actions initiate simulation runs,
+policy applications, and parameter updates, which propagate through the system layers.
+</p>
+
+<div class="diagram">
+  <img src="images/sequence_diagram.png" alt="Sequence Diagram">
+  <div class="caption">Figure 2 – Sequence Diagram (Run + Interventions)</div>
+</div>
+</div>
+
+<!-- UML -->
+<div class="section">
+<h2>5. UML Class Diagram</h2>
+
+<p>
+The UML class diagram presents the structural relationships between core software
+components and highlights loose coupling and modular design.
+</p>
+
+<div class="diagram">
+  <img src="images/class_diagram.png" alt="UML Class Diagram">
+  <div class="caption">Figure 3 – UML Class Diagram (High Level)</div>
+</div>
+</div>
+
+<div class="back">
+  <a href="index.html">← Back to Main Page</a>
+</div>
+
+</div>
 </body>
 </html>
+
