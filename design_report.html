@@ -1,263 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SimuCrisis – High Level Design Report</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High Level Design Report – SimuCrisis</title>
 
 <style>
+body {
+  margin: 0;
+  font-family: "Times New Roman", serif;
+  background:
+    linear-gradient(rgba(255,255,255,0.12), rgba(255,255,255,0.12)),
+    url("https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1600&q=60")
+    center/cover no-repeat fixed;
+}
+
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 40px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.15);
+}
+
+h2, h3 {
+  color: #8b0000;
+}
+
+h2 {
+  margin-top: 40px;
+}
+
+p {
+  text-align: justify;
+  line-height: 1.6;
+}
+
+ul {
+  margin-left: 40px;
+}
+
+.diagram {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.diagram img {
+  max-width: 100%;
+}
+
+.caption {
+  font-size: 0.9em;
+}
+
+.page-break {
+  page-break-before: always;
+}
+
+@media print {
   body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background:
-      linear-gradient(rgba(255,255,255,0.12), rgba(255,255,255,0.12)),
-      url("https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1600&q=60")
-      center/cover no-repeat fixed;
+    background: white;
   }
-
   .container {
-    max-width: 1000px;
-    margin: 40px auto;
-    background: #ffffff;
-    padding: 36px;
-    border-radius: 18px;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+    box-shadow: none;
+    margin: 0;
   }
-
-  h1, h2, h3 {
-    color: #8b0000;
-    font-family: Verdana, sans-serif;
-  }
-
-  h1 {
-    text-align: center;
-  }
-
-  h2 {
-    margin-top: 40px;
-  }
-
-  h3 {
-    margin-top: 25px;
-  }
-
-  p {
-    line-height: 1.65;
-    text-align: justify;
-  }
-
-  ul {
-    margin-left: 30px;
-  }
-
-  .section {
-    margin-top: 35px;
-    padding-top: 20px;
-    border-top: 1px solid #e2e8f0;
-  }
-
-  .diagram {
-    margin: 30px 0;
-    text-align: center;
-  }
-
-  .diagram img {
-    max-width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-  }
-
-  .caption {
-    font-size: 0.9rem;
-    color: #555;
-    margin-top: 6px;
-  }
-
-  .back {
-    text-align: center;
-    margin-top: 40px;
-  }
-
-  .back a {
-    color: #8b0000;
-    font-weight: bold;
-    text-decoration: none;
-  }
-
-  /* ===== PRINT / PDF CONTROL ===== */
-  @media print {
-    body {
-      background: white;
-    }
-    .container {
-      box-shadow: none;
-      margin: 0;
-      padding: 20mm;
-    }
-    h2 {
-      page-break-before: always;
-    }
-    .diagram {
-      page-break-inside: avoid;
-    }
-    .section {
-      page-break-inside: avoid;
-    }
-  }
+}
 </style>
 </head>
 
 <body>
 <div class="container">
 
-<h1>High Level Design Report</h1>
+<h2>1. Introduction</h2>
 
-<!-- ================= SECTION 3 ================= -->
-<div class="section">
-<h2>3. Proposed Software Architecture</h2>
+<h3>1.1 Purpose of the system</h3>
+<p>
+A pandemic simulation system for education called SimuCrisis was created with Unity.
+Its goal is to assist users in investigating the ways in which pandemic management
+choices such as lockdowns, vaccination plans, and modifications to healthcare capacity
+affect the spread of viruses and the burden on healthcare systems. The system is aimed at
+politicians, researchers, educators, and students.
+</p>
+
+<h3>1.2 Design goals</h3>
+<ul>
+<li>A visual representation of pandemic dynamics that is easy to understand.</li>
+<li>Availability on common desktop hardware (VR was eliminated because of its low added value).</li>
+<li>Instantaneous feedback for parameter adjustments and interventions.</li>
+<li>Architecture that is flexible, maintainable, and modular.</li>
+<li>Reproducibility through random seeds, run IDs, and scenario preservation.</li>
+</ul>
+
+<h3>1.3 Definitions, acronyms, and abbreviations</h3>
+<p>The susceptible, exposed, infected, recovered epidemiological model is known as SEIR.</p>
+<p>Rt: The number of effective reproductions over time.</p>
+<p>Scenario: Initial conditions and a saved simulation setup.</p>
+<p>Intervention: A policy implemented by users (lockdown, immunization, capacity adjustments).</p>
+
+<h3>1.4 Overview</h3>
+<p>
+The architecture and key subsystems of SimuCrisis are presented in this High-Level
+Design Report. Boundary conditions, global control logic, data persistence,
+hardware/software mapping, and subsystem decomposition are all covered. The whole
+design is summarized using visual diagrams.
+</p>
+
+<div class="page-break"></div>
+
+<h2>2. Current software architecture</h2>
+<p>
+SimuCrisis does not currently have a software architecture. The project was created from
+the ground up and is intended to be modular for testing and incremental development.
+</p>
+
+<h2>3. Proposed software architecture</h2>
 
 <h3>3.1 Overview</h3>
 <p>
-The modular architecture of SimuCrisis allows the Simulation Core to maintain the
-epidemiological model state while broadcasting state snapshots to downstream components.
-User interactions are processed through the User Interface and translated into policy
-updates by the Policy Engine.
-</p>
-<p>
-Time-series indicators such as the effective reproduction number (Rt), infection peaks,
-and healthcare load are computed by the Metrics Collector. The Visualization Engine
-renders charts and heatmaps based on these metrics. Scenario persistence and export
-operations are handled by the Scenario Manager and Report Generator subsystems.
+The modular architecture of SimuCrisis allows the Simulation Core to broadcast
+snapshots to downstream components while maintaining the model state. The Policy
+Engine applies user actions that are processed through the User Interface. Time-series
+indicators, such as Rt, peaks, and load, are compiled by the Metrics Collector. Heatmaps
+and charts are produced by the Visualization Engine. Export and persistence are managed
+via Report Generator and Scenario Manager.
 </p>
 
 <h3>3.2 Subsystem decomposition</h3>
 <ul>
-  <li><strong>UI Layer (Unity):</strong> Parameter Panel, Policy Panel, Dashboard (Charts/Heatmap), Scenario Comparison UI</li>
-  <li><strong>Core Layer:</strong> Simulation Core (SEIR Model), Policy Engine, Metrics Collector, Visualization Engine</li>
-  <li><strong>Data Layer:</strong> Scenario Manager, Report Generator</li>
-  <li>Local storage for scenarios, configuration metadata, and historical datasets</li>
+<li>UI Layer (Unity) • Dashboard (charts/heatmap), Policy Panel, Parameter Panel, Scenario Compare</li>
+<li>Core Layer</li>
+<li>Data Layer: Simulation Core, Policy Engine, Metrics Collector, Visualization Engine,
+Scenario Manager, and Report Generator</li>
+<li>Local storage, configuration/metadata (seeds, provenance), and dataset repository</li>
 </ul>
 
-<h3>3.3 Hardware / software mapping</h3>
-<p>
-The system is designed to operate on a standard desktop computer and does not require
-specialized hardware such as virtual reality devices. The primary implementation
-environment is Unity using the C# programming language.
-</p>
-<p>
-Optional Python tools may be used for offline data analysis or preprocessing, while all
-persistent data is stored locally using structured files.
-</p>
+<h3>3.3 Hardware/software mapping</h3>
+<p><strong>Hardware:</strong> A typical desktop computer (no need for virtual reality).</p>
+<p><strong>Software:</strong> C#, Unity, Python, and local file storage; dataset packs for historical baselines are optional.</p>
 
 <h3>3.4 Persistent data management</h3>
 <p>
-SimuCrisis stores simulation scenarios and run artifacts locally. These artifacts include
-selected dataset identifiers, simulation parameters, intervention schedules, random seeds
-used for reproducibility, and summary statistics generated during the simulation.
-</p>
-<p>
-No personal or private health information is stored by the system.
+SimuCrisis stores scenarios and run artifacts locally. Stored artifacts include selected
+dataset identifiers, parameter sets, intervention schedules, random seeds for
+reproducibility, and summary statistics. No personal or private health data is stored.
 </p>
 
 <h3>3.5 Access control and security</h3>
 <p>
-The system operates locally and does not require user authentication in its initial
-version. Scenario files can be validated prior to loading to prevent corrupted or invalid
-inputs.
-</p>
-<p>
-Future extensions involving online sharing or collaboration would require access
-control mechanisms and secure communication channels.
+SimuCrisis runs locally and does not require user authentication in its initial release.
+Scenario files can be validated (schema checks) before loading to avoid corrupted inputs.
+Any future online sharing features would require access control and secure transport.
 </p>
 
 <h3>3.6 Global software control</h3>
 <p>
-SimuCrisis follows an event-driven control structure. User actions such as starting,
-pausing, or modifying simulation speed trigger events that update internal parameters.
-</p>
-<p>
-Each simulation timestep generates a snapshot that is used to update metrics and refresh
-visualizations.
+The system follows an event-driven update loop. User actions (start/pause/speed changes,
+policy application) trigger events that update simulation parameters. Each timestep
+produces a snapshot that feeds metrics computation and visualization refresh.
 </p>
 
 <h3>3.7 Boundary conditions</h3>
 <p>
-Simulation performance may degrade for very large population sizes or dense spatial
-representations. To mitigate this, the system applies bounded timestep sizes and
-aggregated compartment logic.
-</p>
-<p>
-Parameter validation mechanisms prevent unstable configurations, such as negative
-transition rates or impossible healthcare capacities.
+Performance may degrade for very large population sizes or dense spatial heatmaps. To
+mitigate this, the simulation can use aggregated compartmental logic and bounded
+timestep sizes. Parameter validation prevents unstable configurations (e.g., negative rates,
+impossible capacities).
 </p>
 
-<div class="diagram">
-  <img src="images/high_level_architecture.png" alt="High-Level Architecture Diagram">
-  <div class="caption">Figure 1 – High-Level Architecture Diagram</div>
-</div>
-</div>
+<div class="page-break"></div>
 
-<!-- ================= SECTION 4 ================= -->
-<div class="section">
-<h2>4. Subsystem Services</h2>
+<h2>4. Subsystem services</h2>
 
-<h3>Simulation Core</h3>
-<p>
-Executes the SEIR epidemiological model and updates the state of the simulated population
-at each timestep based on current parameters.
-</p>
+<p><strong>Simulation Core:</strong></p>
+<ul>
+<li>Executes the SEIR epidemiological model to represent the progression of a disease within the simulated population.</li>
+<li>Inputs: Validated simulation parameters such as infection rate, recovery rate, total population size, simulation time step, and random seed.</li>
+<li>Outputs: Updated simulation state reflecting population distribution.</li>
+<li>Error Handling: Validation checks to ensure population values remain within valid ranges.</li>
+</ul>
 
-<h3>Policy Engine</h3>
-<p>
-Applies user-defined interventions such as lockdowns or vaccination strategies and
-adjusts simulation parameters dynamically according to policy schedules.
-</p>
+<p><strong>Policy Engine</strong></p>
+<ul>
+<li>Service: Manages user interventions and dynamically adjusts simulation parameters.</li>
+<li>Inputs: Policy Objects and current simulation state.</li>
+<li>Outputs: Parameter modifiers.</li>
+<li>Error Handling: Prevents conflicting logic or impossible values.</li>
+</ul>
 
-<h3>Metrics Collector</h3>
-<p>
-Computes analytical indicators including the effective reproduction number (Rt),
-infection peaks, and healthcare utilization metrics.
-</p>
+<p><strong>Metrics Collector</strong></p>
+<ul>
+<li>Service: Calculates Rt, peak infections, and hospital utilization.</li>
+<li>Inputs: Simulation snapshots.</li>
+<li>Outputs: Time-series data and summary statistics.</li>
+<li>Error Handling: Safe fallback values for unstable calculations.</li>
+</ul>
 
-<h3>Visualization Engine</h3>
-<p>
-Generates real-time charts and spatial heatmaps to visually represent infection dynamics.
-</p>
+<p><strong>Visualization Engine</strong></p>
+<ul>
+<li>Service: Renders charts and spatial heatmaps.</li>
+<li>Inputs: Metrics and spatial data.</li>
+<li>Outputs: UI elements.</li>
+<li>Error Handling: Optimized rendering and fallback handling.</li>
+</ul>
 
-<h3>Scenario Manager</h3>
-<p>
-Handles saving, loading, and comparison of simulation scenarios for reproducibility and
-analysis.
-</p>
+<p><strong>Scenario Manager</strong></p>
+<ul>
+<li>Service: Saves and loads simulation scenarios.</li>
+<li>Inputs: User commands and configuration objects.</li>
+<li>Outputs: Serialized JSON and runtime objects.</li>
+<li>Error Handling: Schema validation.</li>
+</ul>
 
-<h3>Report Generator</h3>
-<p>
-Exports simulation results in PDF and CSV formats for external reporting and evaluation.
-</p>
-</div>
+<p><strong>Report Generator</strong></p>
+<ul>
+<li>Service: Compiles final simulation statistics.</li>
+<li>Inputs: Simulation history and metadata.</li>
+<li>Outputs: PDF and CSV reports.</li>
+<li>Error Handling: File system validation.</li>
+</ul>
 
-<!-- ================= SECTION 5 ================= -->
-<div class="section">
+<div class="page-break"></div>
+
 <h2>5. Diagrams (Architecture / Sequence / UML)</h2>
 
 <h3>5.1 High-Level Architecture</h3>
 <div class="diagram">
-  <img src="images/high_level_architecture.png">
+<img src="images/high_level_architecture.png">
+<div class="caption">Figure-1 High Level Architecture Diagram</div>
 </div>
+
+<div class="page-break"></div>
 
 <h3>5.2 Sequence Diagram – Run + Interventions</h3>
 <div class="diagram">
-  <img src="images/sequence_diagram.png">
+<img src="images/sequence_diagram.png">
+<div class="caption">Figure-2 Sequence Diagram</div>
 </div>
+
+<div class="page-break"></div>
 
 <h3>5.3 UML Class Diagram (High-Level)</h3>
 <div class="diagram">
-  <img src="images/class_diagram.png">
-</div>
+<img src="images/class_diagram.png">
+<div class="caption">Figure-3 Class Diagram</div>
 </div>
 
-<!-- ================= SECTION 6 ================= -->
-<div class="section">
+<div class="page-break"></div>
+
 <h2>6. Glossary</h2>
 
 <p><strong>Heatmap:</strong><br>
@@ -282,21 +272,14 @@ over time.</p>
 A representation of the complete simulation state captured at a specific timestep.
 Snapshots include population distributions, calculated metrics, and relevant system
 variables, and are used for both real-time visualization and post-simulation analysis.</p>
-</div>
 
-<!-- ================= SECTION 7 ================= -->
-<div class="section">
+<div class="page-break"></div>
+
 <h2>7. References</h2>
 <p>ACM Code of Ethics and Professional Conduct.</p>
 <p>IEEE Software Engineering Code of Ethics.</p>
 <p>IEEE Code of Ethics.</p>
-<p>World Health Organization (WHO) Pandemic Data Archives.</p>
-<p>Centers for Disease Control and Prevention (CDC) COVID-19 Data Repository.</p>
-</div>
-
-<div class="back">
-  <a href="index.html">← Back to Main Page</a>
-</div>
+<p>WHO Pandemic Data Archives; CDC COVID-19 Data Repository.</p>
 
 </div>
 </body>
