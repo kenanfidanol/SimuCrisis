@@ -18,7 +18,7 @@
   .container {
     max-width: 1000px;
     margin: 40px auto;
-    background: white;
+    background: #ffffff;
     padding: 36px;
     border-radius: 18px;
     box-shadow: 0 6px 24px rgba(0,0,0,0.12);
@@ -31,11 +31,15 @@
 
   h1 {
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    margin-top: 40px;
   }
 
   h3 {
-    margin-top: 30px;
+    margin-top: 25px;
   }
 
   p {
@@ -53,7 +57,7 @@
   }
 
   .diagram {
-    margin: 25px 0;
+    margin: 30px 0;
     text-align: center;
   }
 
@@ -90,49 +94,107 @@
 <strong>SimuCrisis – Pandemic Disaster Management Simulation</strong>
 </p>
 
-<!-- INTRODUCTION -->
+<!-- 1. INTRODUCTION -->
 <div class="section">
 <h2>1. Introduction</h2>
 
 <h3>1.1 Purpose of the System</h3>
 <p>
-SimuCrisis is a pandemic simulation system developed using Unity for educational and
-decision-support purposes. The system enables users to explore how pandemic management
+SimuCrisis is a Unity-based pandemic simulation system developed for educational and
+decision-support purposes. The system allows users to analyze how pandemic management
 decisions—such as lockdowns, vaccination strategies, and healthcare capacity adjustments—
 affect virus spread and healthcare system load.
 </p>
 
 <p>
-The system targets policymakers, educators, researchers, and students who wish to gain
-insight into pandemic dynamics in a controlled, risk-free environment.
+The system primarily targets policymakers, educators, researchers, and students who wish
+to gain insight into pandemic dynamics in a safe and controlled environment.
 </p>
 
 <h3>1.2 Design Goals</h3>
 <ul>
-  <li>Clear and intuitive visualization of pandemic dynamics</li>
-  <li>Compatibility with standard desktop hardware (VR excluded)</li>
-  <li>Real-time feedback for interventions</li>
-  <li>Modular, maintainable, and scalable architecture</li>
-  <li>Reproducibility using saved scenarios and random seeds</li>
+  <li>Provide an intuitive visualization of pandemic dynamics</li>
+  <li>Ensure availability on standard desktop hardware</li>
+  <li>Offer real-time feedback for interventions</li>
+  <li>Maintain a modular and extensible architecture</li>
+  <li>Support reproducibility through scenario preservation</li>
 </ul>
 
-<h3>1.3 Definitions and Abbreviations</h3>
+<h3>1.3 Definitions, Acronyms, and Abbreviations</h3>
 <ul>
-  <li><strong>SEIR</strong>: Susceptible, Exposed, Infected, Recovered model</li>
+  <li><strong>SEIR</strong>: Susceptible, Exposed, Infected, Recovered epidemiological model</li>
   <li><strong>Rt</strong>: Effective reproduction number</li>
-  <li><strong>Scenario</strong>: Stored simulation configuration</li>
-  <li><strong>Intervention</strong>: User-applied policy (lockdown, vaccination, etc.)</li>
+  <li><strong>Scenario</strong>: A saved simulation configuration</li>
+  <li><strong>Intervention</strong>: A policy action applied during a simulation run</li>
 </ul>
+
+<h3>1.4 Overview</h3>
+<p>
+This document presents the high-level architecture of SimuCrisis, including subsystem
+decomposition, control mechanisms, data persistence, and boundary conditions. Diagrams
+are provided to illustrate the overall structure and runtime behavior of the system.
+</p>
 </div>
 
-<!-- ARCHITECTURE -->
+<!-- 2. CURRENT SOFTWARE ARCHITECTURE -->
 <div class="section">
-<h2>2. Proposed Software Architecture</h2>
-
+<h2>2. Current Software Architecture</h2>
 <p>
-SimuCrisis follows a modular, layered architecture composed of three main layers:
-User Interface Layer, Core Layer, and Data Layer. This separation ensures maintainability,
-testability, and future extensibility.
+SimuCrisis does not rely on a pre-existing software architecture. The system has been
+designed and implemented from scratch with modularity and incremental development in
+mind.
+</p>
+</div>
+
+<!-- 3. PROPOSED SOFTWARE ARCHITECTURE -->
+<div class="section">
+<h2>3. Proposed Software Architecture</h2>
+
+<h3>3.1 Overview</h3>
+<p>
+The proposed architecture follows a layered and modular design. The Simulation Core
+maintains the epidemiological model state, while additional components handle policies,
+metrics, visualization, and persistence.
+</p>
+
+<h3>3.2 Subsystem Decomposition</h3>
+<ul>
+  <li><strong>UI Layer</strong>: Dashboard, parameter panel, policy panel, scenario comparison</li>
+  <li><strong>Core Layer</strong>: Simulation Core, Policy Engine, Metrics Collector, Visualization Engine</li>
+  <li><strong>Data Layer</strong>: Dataset repository, scenario storage, configuration metadata</li>
+</ul>
+
+<h3>3.3 Hardware / Software Mapping</h3>
+<p>
+SimuCrisis is designed to operate on standard desktop computers. The primary technologies
+used include Unity with C#, optional Python tools for analysis, and local file storage.
+</p>
+
+<h3>3.4 Persistent Data Management</h3>
+<p>
+The system stores simulation scenarios and run artifacts locally. Stored data includes
+parameter sets, intervention schedules, random seeds, and summary statistics. No personal
+health data is collected or stored.
+</p>
+
+<h3>3.5 Access Control and Security</h3>
+<p>
+The initial release of SimuCrisis does not require user authentication. Scenario files are
+validated before loading to prevent corrupted or incompatible inputs. Future online
+features would require secure access control.
+</p>
+
+<h3>3.6 Global Software Control</h3>
+<p>
+SimuCrisis follows an event-driven control model. User interactions trigger events that
+update simulation parameters. Each timestep produces a snapshot used for analytics and
+visual updates.
+</p>
+
+<h3>3.7 Boundary Conditions</h3>
+<p>
+Performance limitations may occur for very large population sizes or dense spatial models.
+To mitigate this, bounded timestep sizes and parameter validation mechanisms are applied.
 </p>
 
 <div class="diagram">
@@ -141,73 +203,75 @@ testability, and future extensibility.
 </div>
 </div>
 
-<!-- SUBSYSTEMS -->
+<!-- 4. SUBSYSTEM SERVICES -->
 <div class="section">
-<h2>3. Subsystem Services</h2>
+<h2>4. Subsystem Services</h2>
 
 <h3>Simulation Core</h3>
 <p>
-Executes the SEIR epidemiological model and updates population states at each timestep.
-It validates parameters and prevents unstable simulation states.
+Executes the SEIR model and updates population states at each timestep while ensuring
+numerical stability.
 </p>
 
 <h3>Policy Engine</h3>
 <p>
-Processes user-defined interventions and modifies simulation parameters dynamically.
-Validates policy constraints to avoid logical conflicts.
+Manages user-defined interventions and applies validated parameter modifications.
 </p>
 
 <h3>Metrics Collector</h3>
 <p>
-Computes analytical indicators such as Rt, infection peaks, and hospital utilization.
-Provides time-series data for visualization and reporting.
+Computes analytical indicators such as Rt, infection peaks, and healthcare utilization.
 </p>
 
 <h3>Visualization Engine</h3>
 <p>
-Renders charts and spatial heatmaps that visualize infection spread and trends in real time.
-Optimized to maintain performance on standard hardware.
+Renders real-time charts and spatial heatmaps representing infection dynamics.
 </p>
 
 <h3>Scenario Manager</h3>
 <p>
-Handles saving, loading, and comparison of simulation scenarios using structured JSON files.
+Handles saving, loading, and comparison of simulation scenarios.
 </p>
 
 <h3>Report Generator</h3>
 <p>
-Exports simulation results into PDF summaries and CSV datasets for external analysis.
+Exports simulation results in PDF and CSV formats for external analysis.
 </p>
 </div>
 
-<!-- SEQUENCE -->
+<!-- 5. DIAGRAMS -->
 <div class="section">
-<h2>4. Runtime Interaction</h2>
-
-<p>
-The system operates in an event-driven loop. User actions initiate simulation runs,
-policy applications, and parameter updates, which propagate through the system layers.
-</p>
+<h2>5. Diagrams</h2>
 
 <div class="diagram">
   <img src="images/sequence_diagram.png" alt="Sequence Diagram">
   <div class="caption">Figure 2 – Sequence Diagram (Run + Interventions)</div>
 </div>
-</div>
-
-<!-- UML -->
-<div class="section">
-<h2>5. UML Class Diagram</h2>
-
-<p>
-The UML class diagram presents the structural relationships between core software
-components and highlights loose coupling and modular design.
-</p>
 
 <div class="diagram">
   <img src="images/class_diagram.png" alt="UML Class Diagram">
   <div class="caption">Figure 3 – UML Class Diagram (High Level)</div>
 </div>
+</div>
+
+<!-- 6. GLOSSARY -->
+<div class="section">
+<h2>6. Glossary</h2>
+<ul>
+  <li><strong>Heatmap</strong>: Spatial visualization showing infection density</li>
+  <li><strong>Snapshot</strong>: Simulation state captured at a timestep</li>
+  <li><strong>Scenario</strong>: Stored simulation configuration</li>
+</ul>
+</div>
+
+<!-- 7. REFERENCES -->
+<div class="section">
+<h2>7. References</h2>
+<ul>
+  <li>ACM Code of Ethics and Professional Conduct</li>
+  <li>IEEE Software Engineering Code of Ethics</li>
+  <li>WHO and CDC Pandemic Data Repositories</li>
+</ul>
 </div>
 
 <div class="back">
