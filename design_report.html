@@ -3,14 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Test Plan Report – SimuCrisis</title>
+<title>High Level Design Report – SimuCrisis</title>
 
 <style>
-
 body {
   margin: 0;
   font-family: "Times New Roman", serif;
-
   background:
     linear-gradient(rgba(255,255,255,0.12), rgba(255,255,255,0.12)),
     url("https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1600&q=60")
@@ -22,16 +20,11 @@ body {
   margin: 40px auto;
   background: #ffffff;
   padding: 40px;
-  border-radius: 16px;
   box-shadow: 0 0 14px rgba(0,0,0,0.18);
 }
 
-h1, h2, h3 {
+h2, h3 {
   color: #8b0000;
-}
-
-h1 {
-  text-align: center;
 }
 
 h2 {
@@ -44,22 +37,24 @@ p {
 }
 
 ul {
-  margin-left: 30px;
+  margin-left: 40px;
 }
 
 .diagram {
   text-align: center;
-  margin: 25px 0;
+  margin: 20px 0;
 }
 
 .diagram img {
-  width: 100%;
-  border: 1px solid #999;
+  max-width: 100%;
 }
 
 .caption {
-  margin-top: 8px;
-  font-size: 0.95em;
+  font-size: 0.9em;
+}
+
+.page-break {
+  page-break-before: always;
 }
 
 .footer {
@@ -69,13 +64,13 @@ ul {
 
 .button-link {
   display: inline-block;
-  margin-top: 12px;
-  padding: 10px 16px;
+  margin-top: 20px;
+  padding: 10px 14px;
   border-radius: 10px;
   border: 1px solid #8b0000;
   color: #8b0000;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .button-link:hover {
@@ -83,257 +78,258 @@ ul {
   color: white;
 }
 
+@media print {
+  body {
+    background: white;
+  }
+  .container {
+    box-shadow: none;
+    margin: 0;
+  }
+}
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-<h1>Test Plan Report</h1>
+<h2>1. Introduction</h2>
 
-<h2>1. Features to Be Tested</h2>
-
+<h3>1.1 Purpose of the system</h3>
 <p>
-This section identifies the main functional and quality-related parts of SimuCrisis
-that will be tested. Because the project is an educational pandemic disaster
-management simulation, testing focuses on model correctness, policy-response
-behavior, system usability, export functionality, and the reliability of reported
-results.
+A pandemic simulation system for education called SimuCrisis was created with Unity.
+Its goal is to assist users in investigating the ways in which pandemic management
+choices such as lockdowns, vaccination plans, and modifications to healthcare capacity
+affect the spread of viruses and the burden on healthcare systems. The system is aimed at
+politicians, researchers, educators, and students.
 </p>
 
-<h3>1.1 Functional Features</h3>
+<h3>1.2 Design goals</h3>
+<ul>
+<li>A visual representation of pandemic dynamics that is easy to understand.</li>
+<li>Availability on common desktop hardware (VR was eliminated because of its low added value).</li>
+<li>Instantaneous feedback for parameter adjustments and interventions.</li>
+<li>Architecture that is flexible, maintainable, and modular.</li>
+<li>Reproducibility through random seeds, run IDs, and scenario preservation.</li>
+</ul>
 
-<div class="diagram">
-<img src="images/testplan_features.png">
-</div>
+<h3>1.3 Definitions, acronyms, and abbreviations</h3>
+<p>SEIR: Susceptible, Exposed, Infected, Recovered epidemiological model.</p>
+<p>Rt: Effective reproduction number over time.</p>
+<p>Scenario: Saved simulation configuration with initial conditions.</p>
+<p>Intervention: User-defined policy action (lockdown, vaccination, capacity changes).</p>
 
-<h2>2. Testing Methodology</h2>
-
+<h3>1.4 Overview</h3>
 <p>
-Testing in SimuCrisis will combine automated checks and manual review.
-Automated tests are used mainly for validating deterministic model calculations,
-scenario consistency, and export accuracy. Manual tests are necessary for dashboard
-clarity, visualization readability, and the educational interpretation of simulation
-results.
+The architecture and key subsystems of SimuCrisis are presented in this High-Level
+Design Report. Boundary conditions, global control logic, data persistence,
+hardware/software mapping, and subsystem decomposition are all covered. The whole
+design is summarized using visual diagrams.
 </p>
 
-<h3>2.1 Unit Testing</h3>
+<div class="page-break"></div>
 
-<ul>
-<li>
-Scope: core simulation logic, policy application, metrics calculation, scenario
-management, and report generation.
-</li>
-
-<li>
-Tools: Unity Test Framework for EditMode and PlayMode tests, plus lightweight
-debug logs.
-</li>
-
-<li>
-Goal: ensure small modules behave independently and produce valid outputs under
-normal and edge-case conditions.
-</li>
-</ul>
-
-<div class="diagram">
-<img src="images/images_testplan_unit.png">
-</div>
-
-<h3>2.2 Integration Testing</h3>
-
-<ul>
-<li>
-Focus: interactions between model logic, policy application, metrics calculation,
-dashboard updates, and export features.
-</li>
-
-<li>
-Goal: confirm that data moves correctly between modules and that no invalid or
-stale values appear after state transitions.
-</li>
-</ul>
-
-<div class="diagram">
-<img src="images/images_testplan_integration.png">
-</div>
-
-<h3>2.3 System Testing</h3>
-
-<ul>
-<li>
-Environment: the same desktop platform intended for demonstration and educational
-usage.
-</li>
-
-<li>
-Testing: complete workflows such as loading a scenario, changing policies,
-running the simulation, comparing outcomes, and exporting reports.
-</li>
-
-<li>
-Purpose: verification of the full workflow, stability of repeated runs, and
-clarity of the educational outputs.
-</li>
-</ul>
-
-<div class="diagram">
-<img src="images/images_testplan_system.png">
-</div>
-
-<h3>2.4 Performance Testing</h3>
-
-<ul>
-<li>
-Metrics: initialization time, update time, UI response time, export duration,
-and long-session stability.
-</li>
-
-<li>
-Targets: responsive behavior for large but realistic outbreak simulations,
-classroom sessions, and project evaluation demos.
-</li>
-
-<li>
-Tools: Unity Profiler, debug logs, simple benchmark measurements of repeated
-runs, and GitHub issue tracking for observed slowdowns.
-</li>
-</ul>
-
-<div class="diagram">
-<img src="images/images_testplan_performance.png">
-</div>
-
-<h3>2.5 User Acceptance Testing (UAT)</h3>
-
-<ul>
-<li>
-Participants: selected students, peers, and academic reviewers who represent the
-intended educational audience.
-</li>
-
-<li>
-Focus: ease of use, clarity of outputs, interpretability of graphs and heatmaps,
-and perceived learning value.
-</li>
-
-<li>
-Tests: realistic educational scenarios and short classroom-feedback flows.
-</li>
-</ul>
-
-<div class="diagram">
-<img src="images/images_testplan_uat.png">
-</div>
-
-<h3>2.6 Beta Testing</h3>
-
-<ul>
-<li>
-Targets: short pilot execution on non-development machines, portability checks,
-and external reviewer feedback.
-</li>
-
-<li>
-Purpose: uncover bugs, platform-specific issues, and workflow confusion not
-identified during controlled developer testing.
-</li>
-</ul>
-
-<h2>3. Test Methods</h2>
-
+<h2>2. Current software architecture</h2>
 <p>
-This section explains how the testing activity will be performed in practice.
-The methods are selected to match the structure of SimuCrisis while ensuring both
-correctness of the internal model behavior and educational usability during
-demonstration use.
+SimuCrisis does not currently have a software architecture. The project was created from
+the ground up and is intended to be modular for testing and incremental development.
 </p>
 
-<h3>3.1 Unit Testing</h3>
+<h2>3. Proposed software architecture</h2>
 
+<h3>3.1 Overview</h3>
 <p>
-Objectives: validate that each independent module performs its intended task
-correctly under normal, boundary, and invalid input conditions.
+The modular architecture of SimuCrisis allows the Simulation Core to broadcast
+snapshots to downstream components while maintaining the model state. The Policy
+Engine applies user actions that are processed through the User Interface. Time-series
+indicators, such as Rt, peaks, and load, are compiled by the Metrics Collector. Heatmaps
+and charts are produced by the Visualization Engine. Export and persistence are managed
+via Report Generator and Scenario Manager.
 </p>
 
+<h3>3.2 Subsystem decomposition</h3>
+<ul>
+<li>UI Layer (Unity): Dashboard (charts/heatmap), Policy Panel, Parameter Panel, Scenario Comparison UI</li>
+<li>Core Layer: Simulation Core, Policy Engine, Metrics Collector, Visualization Engine</li>
+<li>Data Layer: Scenario Manager and Report Generator</li>
+<li>Local storage for datasets, scenarios, configuration metadata, and run artifacts</li>
+</ul>
+
+<h3>3.3 Hardware / software mapping</h3>
+<p><strong>Hardware:</strong> Standard desktop computer (no VR requirement).</p>
+<p><strong>Software:</strong> Unity (C#), optional Python for preprocessing, local file storage.</p>
+
+<h3>3.4 Persistent data management</h3>
 <p>
-Approach: the Simulation Core will be tested with controlled timestep inputs to
-confirm valid SEIR transitions and stable health calculations. The Policy Engine
-will be tested to confirm that policy changes only affect intended parameters.
-The Metrics Collector will be tested using known snapshots so that calculated
-outputs can be compared against expected values.
+SimuCrisis stores scenarios and simulation run artifacts locally. Stored data includes
+dataset identifiers, parameter configurations, intervention schedules, random seeds,
+and summary statistics. No personal or private health information is stored.
 </p>
 
+<h3>3.5 Access control and security</h3>
 <p>
-Validation: limits, null values, deterministic-repeat behavior, exported report
-structure, and scenario consistency checks.
+The system runs locally and does not require user authentication in its initial version.
+Scenario validation mechanisms prevent corrupted or invalid configurations.
+</p>
+
+<h3>3.6 Global software control</h3>
+<p>
+The system follows an event-driven control structure. User actions trigger parameter
+updates, and each simulation timestep produces a snapshot used to update metrics and
+visualizations.
+</p>
+
+<h3>3.7 Boundary conditions</h3>
+<p>
+Performance may degrade for very large population sizes. To mitigate this, aggregated
+compartment logic and bounded timestep sizes are used. Parameter validation prevents
+unstable configurations.
+</p>
+
+<div class="page-break"></div>
+
+<h2>4. Subsystem services</h2>
+
+<p><strong>Simulation Core:</strong></p>
+<ul>
+<li>Executes the SEIR epidemiological model.</li>
+<li>Updates population states at each timestep.</li>
+<li>Ensures numerical stability and validity.</li>
+</ul>
+
+<p><strong>Policy Engine:</strong></p>
+<ul>
+<li>Applies user-defined interventions.</li>
+<li>Adjusts simulation parameters dynamically.</li>
+</ul>
+
+<p><strong>Metrics Collector:</strong></p>
+<ul>
+<li>Computes Rt, infection peaks, and healthcare utilization.</li>
+</ul>
+
+<p><strong>Visualization Engine:</strong></p>
+<ul>
+<li>Renders real-time charts and spatial heatmaps.</li>
+</ul>
+
+<p><strong>Scenario Manager:</strong></p>
+<ul>
+<li>Saves, loads, and compares simulation scenarios.</li>
+</ul>
+
+<p><strong>Report Generator:</strong></p>
+<ul>
+<li>Exports simulation results in PDF and CSV formats.</li>
+</ul>
+
+<div class="page-break"></div>
+
+<h2>5. Diagrams (Architecture / Sequence / UML)</h2>
+
+<p>
+The primary design diagrams utilized in SimuCrisis are described in this section. The
+system architecture, runtime interactions, and structural arrangement of essential software
+components are all summarized in the diagrams. They enhance the written design
+description and make the system's operation more understandable.
+</p>
+
+<h3>5.1 High-Level Architecture</h3>
+<p>
+SimuCrisis is shown in the High-Level Architecture Diagram as a layered system made
+up of the UI Layer, Core Layer, and Data Layer. Modularity and distinct boundaries of
+duty are guaranteed by this division. The UI Layer does not contain simulation logic;
+instead, it manages user interaction and visualization controls. The Simulation Core,
+Policy Engine, Metrics Collector, and Visualization Engine comprise the Core Layer,
+which collectively oversees model execution, interventions, and analytics. The Data
+Layer facilitates analysis and repeatability by storing datasets, scenarios, and run
+artifacts.
 </p>
 
 <div class="diagram">
-<img src="images/images_testplan_timeline.png">
+<img src="images/high_level_architecture.png">
+<div class="caption">Figure-1 High Level Architecture Diagram</div>
 </div>
 
-<h3>4.3 Test Data and Realistic Simulation Conditions</h3>
+<div class="page-break"></div>
 
-<ul>
-<li>
-Historical pandemic datasets and structured reference parameters used to initialize
-realistic learning scenarios.
-</li>
-
-<li>
-Synthetic edge-case scenarios, such as extreme transmission rates, unrealistic
-capacity limits, or abrupt policy changes, used to stress the model safely.
-</li>
-
-<li>
-Repeated runs of the same scenario configuration to verify reproducibility and
-consistency.
-</li>
-
-<li>
-Scenario sets representing low, medium, and high outbreak severity so that the
-team can compare both normal and stress conditions.
-</li>
-</ul>
-
-<h2>5. Test Timeline</h2>
-
+<h3>5.2 Sequence Diagram – Run + Interventions</h3>
 <p>
-The following timeline shows the planned order of testing activities.
-A week-based schedule is used so that the plan remains valid even if small
-project-calendar changes occur. If a phase reveals critical faults, the next
-dependent phase may be delayed until the critical issue is resolved.
+The interaction between system components throughout a simulation run is depicted in
+the Sequence Diagram. Model initialization in the Simulation Core comes after user
+configuration via the user interface. The simulation progresses, measurements are
+updated, and visuals are updated at each timestep. The Policy Engine calculates
+parameter changes that impact subsequent timesteps when a policy is applied. This
+illustration emphasizes how the simulation is event-driven and iterative.
 </p>
 
 <div class="diagram">
-<img src="images/images_testplan_timeline.png">
+<img src="images/sequence_diagram.png">
+<div class="caption">Figure-2 Sequence Diagram</div>
 </div>
 
-<h3>5.1 Test Dependencies</h3>
+<div class="page-break"></div>
 
-<p><strong>Integration Testing:</strong> Successful completion of essential unit tests for connected modules.</p>
-
-<p><strong>System Testing:</strong> A stable integrated build with no unresolved critical integration blockers.</p>
-
-<p><strong>Performance Testing:</strong> A functionally correct system build that can run end-to-end scenarios.</p>
-
-<p><strong>User Acceptance Testing:</strong> A stable system build with acceptable baseline performance.</p>
-
-<p><strong>Beta Testing:</strong> Completion of UAT and resolution of major usability blockers.</p>
-
-<p><strong>Bug Fixing and Regression:</strong> Defect reports coming from integration, system, performance, UAT, and beta testing.</p>
+<h3>5.3 UML Class Diagram (High-Level)</h3>
+<p>
+A structural summary of the primary software classes and their connections may be found
+in the UML Class Diagram. MetricsCollector generates analytical indicators,
+PolicyEngine organizes interventions, and SimulationCore controls model state and
+advancement. While ScenarioManager and ReportGenerator facilitate export and
+persistence, VisualizationEngine concentrates on rendering outcomes. The diagram
+places a strong emphasis on modular design and loose connection, enabling future
+additions with little impact.
+</p>
 
 <div class="diagram">
-<img src="images/images_testplan_dependencies.png">
+<img src="images/class_diagram.png">
+<div class="caption">Figure-3 UML Class Diagram</div>
 </div>
 
-</div>
+<div class="page-break"></div>
+
+<h2>6. Glossary</h2>
+
+<p><strong>Heatmap:</strong><br>
+A spatial visualization technique used to represent the intensity or concentration of a
+specific variable across a geographic or simulated space. In SimuCrisis, heatmaps are
+primarily used to display infection density and help users visually identify high-risk or
+heavily affected areas.
+</p>
+
+<p><strong>Scenario:</strong><br>
+A stored simulation configuration that includes initial conditions, disease parameters,
+and a predefined set of intervention policies. Scenarios allow users to reproduce
+experiments, compare different strategies, and analyze outcomes under consistent starting
+assumptions.
+</p>
+
+<p><strong>Intervention:</strong><br>
+A user-defined policy action applied during a simulation run to influence disease
+dynamics. Examples include lockdown measures, vaccination strategies, and healthcare
+capacity adjustments. Interventions modify simulation parameters in a controlled manner
+over time.
+</p>
+
+<p><strong>Snapshot:</strong><br>
+A representation of the complete simulation state captured at a specific timestep.
+Snapshots include population distributions, calculated metrics, and relevant system
+variables, and are used for both real-time visualization and post-simulation analysis.
+</p>
+
+<div class="page-break"></div>
+
+<h2>7. References</h2>
+<p>ACM Code of Ethics and Professional Conduct.</p>
+<p>IEEE Software Engineering Code of Ethics.</p>
+<p>IEEE Code of Ethics.</p>
+<p>WHO Pandemic Data Archives.</p>
+<p>CDC COVID-19 Data Repository.</p>
 
 <div class="footer">
-  <a class="button-link" href="index.html">Return to Main Page</a>
+  <a class="button-link" href="index.html">Back to Main Page</a>
 </div>
 
+</div>
 </body>
 </html>
