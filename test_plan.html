@@ -36,8 +36,12 @@ p {
   line-height: 1.6;
 }
 
-ul {
+ul, ol {
   margin-left: 40px;
+}
+
+li {
+  line-height: 1.6;
 }
 
 .diagram {
@@ -47,10 +51,6 @@ ul {
 
 .diagram img {
   max-width: 100%;
-}
-
-.caption {
-  font-size: 0.9em;
 }
 
 .page-break {
@@ -99,8 +99,7 @@ This section identifies the main functional and quality-related parts of SimuCri
 <h3>1.1 Functional Features</h3>
 
 <div class="diagram">
-<img src="images/Ekran görüntüsü 2026-05-17 214757.png">
-<div class="caption">Functional Features Table</div>
+<img src="images/testplan_features.png">
 </div>
 
 <h3>1.2 Non-Functional Features</h3>
@@ -136,8 +135,7 @@ Testing in SimuCrisis will combine automated checks and manual review. Automated
 </ul>
 
 <div class="diagram">
-<img src="images/Ekran görüntüsü 2026-05-17 214839.png">
-<div class="caption">Unit Testing Table</div>
+<img src="images/testplan_unit.png">
 </div>
 
 <h3>2.2 Integration Testing</h3>
@@ -149,8 +147,7 @@ Testing in SimuCrisis will combine automated checks and manual review. Automated
 </ul>
 
 <div class="diagram">
-<img src="images/Ekran görüntüsü 2026-05-17 214848.png">
-<div class="caption">Integration Testing Table</div>
+<img src="images/testplan_integration.png">
 </div>
 
 <h3>2.3 System Testing</h3>
@@ -162,8 +159,7 @@ Testing in SimuCrisis will combine automated checks and manual review. Automated
 </ul>
 
 <div class="diagram">
-<img src="images/Ekran görüntüsü 2026-05-17 214855.png">
-<div class="caption">System Testing Table</div>
+<img src="images/testplan_system.png">
 </div>
 
 <h3>2.4 Performance Testing</h3>
@@ -175,8 +171,7 @@ Testing in SimuCrisis will combine automated checks and manual review. Automated
 </ul>
 
 <div class="diagram">
-<img src="images/Ekran görüntüsü 2026-05-17 214904.png">
-<div class="caption">Performance Testing Table</div>
+<img src="images/testplan_performance.png">
 </div>
 
 <h3>2.5 User Acceptance Testing (UAT)</h3>
@@ -188,8 +183,7 @@ Testing in SimuCrisis will combine automated checks and manual review. Automated
 </ul>
 
 <div class="diagram">
-<img src="images/Ekran görüntüsü 2026-05-17 214914.png">
-<div class="caption">User Acceptance Testing Table</div>
+<img src="images/testplan_uat.png">
 </div>
 
 <h3>2.6 Beta Testing</h3>
@@ -337,8 +331,7 @@ The following timeline shows the planned order of testing activities. A week-bas
 </p>
 
 <div class="diagram">
-<img src="images/Ekran görüntüsü 2026-05-17 214925.png">
-<div class="caption">Test Timeline Table</div>
+<img src="images/testplan_timeline.png">
 </div>
 
 <h3>5.1 Test Dependencies</h3>
@@ -393,11 +386,9 @@ Priority levels: Critical (blocks essential workflow), High (major feature affec
 
 <h3>6.4 Tools and Platforms</h3>
 
-<p><b>Unity Test Framework:</b> Automated EditMode / PlayMode tests for core logic and selected interactions.</p>
-<p><b>Unity Profiler:</b> Performance monitoring for update time, memory behavior, and responsiveness.</p>
-<p><b>Application Debug Logs:</b> Tracing logic flow, invalid inputs, and export or load failures.</p>
-<p><b>GitHub Issues / Project Board or Shared Tracker:</b> Defect tracking, execution tracking, and follow-up management.</p>
-<p><b>Spreadsheet-based Test Log:</b> A simple overview of executed cases, status, owner, and remarks for reporting.</p>
+<div class="diagram">
+<img src="images/testplan_tools.png">
+</div>
 
 <div class="page-break"></div>
 
