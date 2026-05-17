@@ -3,54 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SimuCrisis – Low Level Design Report</title>
+<title>Low Level Design Report – SimuCrisis</title>
 
 <style>
+
 body {
   margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
+  font-family: "Times New Roman", serif;
   background:
-    linear-gradient(rgba(255,255,255,0.10), rgba(255,255,255,0.10)),
+    linear-gradient(rgba(255,255,255,0.12), rgba(255,255,255,0.12)),
     url("https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1600&q=60")
     center/cover no-repeat fixed;
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 900px;
   margin: 40px auto;
   background: #ffffff;
-  padding: 35px;
-  border-radius: 18px;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+  padding: 40px;
+  box-shadow: 0 0 14px rgba(0,0,0,0.18);
 }
 
-h1, h2, h3 {
+h2, h3 {
   color: #8b0000;
-  font-family: Verdana, sans-serif;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 10px;
+h2 {
+  margin-top: 40px;
 }
 
-.section {
-  margin: 24px 0;
-  padding-bottom: 18px;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-p, li {
+p {
+  text-align: justify;
   line-height: 1.6;
 }
 
-.report-img {
-  display: block;
-  max-width: 90%;
-  margin: 25px auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+ul {
+  margin-left: 40px;
+}
+
+.diagram {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.diagram img {
+  max-width: 100%;
+}
+
+.caption {
+  font-size: 0.9em;
+}
+
+.page-break {
+  page-break-before: always;
 }
 
 .button-link {
@@ -68,6 +73,18 @@ p, li {
   background: #8b0000;
   color: white;
 }
+
+@media print {
+  body {
+    background: white;
+  }
+
+  .container {
+    box-shadow: none;
+    margin: 0;
+  }
+}
+
 </style>
 </head>
 
@@ -75,62 +92,117 @@ p, li {
 
 <div class="container">
 
-<h1>SimuCrisis – Low Level Design Report</h1>
-
-<div class="section">
 <h2>1. Introduction</h2>
-<p>
-The purpose of this document is to provide detailed low-level design specifications for SimuCrisis, a pandemic disaster management simulation system developed using Unity.
-SimuCrisis enables users to explore how different intervention strategies such as lockdowns, vaccination policies, and healthcare capacity adjustments affect the spread of infectious diseases and system load.
-This document expands the high-level design by defining internal components, class structures, data flows, and interfaces required for implementation.
-The system is designed with a strong emphasis on real-time simulation, modular architecture, performance efficiency, and reproducibility.
-</p>
-</div>
 
-<div class="section">
-<h2>1.1 Object Design Trade Offs</h2>
 <p>
-The design of SimuCrisis involves several critical engineering trade-offs focused on balancing computational efficiency with educational accuracy:
+The purpose of this document is to provide detailed low-level design specifications for
+SimuCrisis, a pandemic disaster management simulation system developed using Unity.
+SimuCrisis enables users to explore how different intervention strategies such as lockdowns,
+vaccination policies, and healthcare capacity adjustments affect the spread of infectious
+diseases and system load.
 </p>
+
+<p>
+This document expands the high-level design by defining internal components, class
+structures, data flows, and interfaces required for implementation.
+</p>
+
+<p>
+The system is designed with a strong emphasis on real-time simulation, modular
+architecture, performance efficiency, and reproducibility.
+</p>
+
+<h3>1.1 Object Design Trade Offs</h3>
+
+<p>
+The design of SimuCrisis involves several critical engineering trade-offs focused on
+balancing computational efficiency with educational accuracy:
+</p>
+
 <ul>
-<li><b>Performance vs. Accuracy:</b> A compartment-based SEIR model was selected over agent-based modeling. While agent-based models offer higher granularity, the SEIR model allows for real-time simulation of large populations on standard desktop hardware without performance degradation.</li>
-<li><b>Hardware Accessibility vs. Novelty:</b> The team intentionally removed Virtual Reality (VR) support. The trade-off was between "visual novelty" and "system usability"; by focusing on a desktop-only version, we ensured the project is accessible to educators and researchers without specialized hardware.</li>
-<li><b>Modularity vs. Implementation Time:</b> We adopted a Strategy Pattern for the Policy Engine. This increased initial development complexity but ensures that new pandemic policies can be added or modified without changing the Simulation Core.</li>
-</ul>
-</div>
 
-<div class="section">
-<h2>1.2 Interface Documentation Guidelines</h2>
-<p>All components follow standardized interface definitions:</p>
+<li>
+<b>Performance vs. Accuracy:</b> A compartment-based SEIR model was selected over
+agent-based modeling. While agent-based models offer higher granularity, the SEIR
+model allows for real-time simulation of large populations on standard desktop
+hardware without performance degradation.
+</li>
+
+<li>
+<b>Hardware Accessibility vs. Novelty:</b> The team intentionally removed Virtual
+Reality (VR) support. The trade-off was between "visual novelty" and "system
+usability"; by focusing on a desktop-only version, we ensured the project is
+accessible to educators and researchers without specialized hardware.
+</li>
+
+<li>
+<b>Modularity vs. Implementation Time:</b> We adopted a Strategy Pattern for the
+Policy Engine. This increased initial development complexity but ensures that new
+pandemic policies (lockdowns, vaccinations) can be added or modified without
+changing the Simulation Core.
+</li>
+
+</ul>
+
+<h3>1.2 Interface Documentation Guidelines</h3>
+
+<p>
+All components follow standardized interface definitions:
+</p>
+
 <ul>
 <li>Clear method signatures</li>
 <li>Defined input/output types</li>
 <li>Error handling mechanisms</li>
 </ul>
-<p>Interfaces are designed to minimize coupling between modules.</p>
-</div>
 
-<div class="section">
-<h2>1.3 Engineering Standards</h2>
+<p>
+Interfaces are designed to minimize coupling between modules.
+</p>
+
+<h3>1.3 Engineering Standards</h3>
+
+<p>
+The project strictly adheres to the following professional and technical standards:
+</p>
+
 <ul>
-<li><b>Ethical Modeling:</b> Following the ACM Code of Ethics, the system is designed to be neutral and educational.</li>
-<li><b>Documentation & Design:</b> We utilize UML 2.0 for architectural visualization and IEEE software engineering principles.</li>
-<li><b>Data Integrity:</b> All historical datasets are sourced from the World Health Organization and CDC archives.</li>
-</ul>
-</div>
 
-<div class="section">
-<h2>1.4 Definitions, Acronyms, and Abbreviations</h2>
+<li>
+<b>Ethical Modeling:</b> Following the ACM Code of Ethics, the system is designed to be
+neutral and educational. It specifically avoids promoting real-world political bias and
+includes clear disclaimers that it is not a diagnostic tool.
+</li>
+
+<li>
+<b>Documentation & Design:</b> We utilize UML 2.0 for architectural visualization and
+IEEE software engineering principles for requirements and verification.
+</li>
+
+<li>
+<b>Data Integrity:</b> All historical datasets are sourced from the World Health
+Organization (WHO) and CDC archives to ensure scientific validity.
+</li>
+
+</ul>
+
+<h3>1.4 Definitions, Acronyms, and Abbreviations</h3>
+
 <p><b>SEIR:</b> Susceptible, Exposed, Infected, Recovered model</p>
 <p><b>Rt:</b> Effective reproduction number</p>
 <p><b>Scenario:</b> Saved simulation configuration</p>
 <p><b>Intervention:</b> Policy action affecting simulation</p>
-</div>
 
-<div class="section">
+<div class="page-break"></div>
+
 <h2>2. Packages</h2>
+
 <h3>2.1 System Decomposition</h3>
-<p>The system is divided into the following core modules:</p>
+
+<p>
+The system is divided into the following core modules:
+</p>
+
 <ul>
 <li>Simulation Core – Runs SEIR model</li>
 <li>Policy Engine – Applies interventions</li>
@@ -140,249 +212,397 @@ The design of SimuCrisis involves several critical engineering trade-offs focuse
 <li>Report Generator – Exports results</li>
 <li>UI System – Handles user interaction</li>
 </ul>
-</div>
 
-<div class="section">
-<h2>2.1.1 Simulation Core Package</h2>
+<h3>2.1.1 Simulation Core Package</h3>
+
 <p><b>Purpose:</b> Executes epidemiological simulation</p>
+
 <p><b>Responsibilities:</b></p>
+
 <ul>
 <li>Update SEIR states</li>
 <li>Handle timestep progression</li>
 <li>Maintain simulation state</li>
 </ul>
+
 <p><b>Key Components:</b></p>
+
 <ul>
 <li>SimulationCore</li>
 <li>PopulationModel</li>
 </ul>
-</div>
 
-<div class="section">
-<h2>2.1.2 Policy Engine Package</h2>
+<h3>2.1.2 Policy Engine Package</h3>
+
 <p><b>Purpose:</b> Applies interventions dynamically</p>
+
 <p><b>Responsibilities:</b></p>
+
 <ul>
 <li>Modify parameters</li>
 <li>Manage policy schedules</li>
 </ul>
+
 <p><b>Key Components:</b></p>
+
 <ul>
 <li>PolicyEngine</li>
 <li>Policy</li>
 </ul>
-</div>
 
-<div class="section">
-<h2>2.1.3 Metrics Collector Package</h2>
+<h3>2.1.3 Metrics Collector Package</h3>
+
 <p><b>Purpose:</b> Computes analytical metrics</p>
+
 <p><b>Responsibilities:</b></p>
+
 <ul>
 <li>Calculate Rt</li>
 <li>Track infection peaks</li>
 <li>Monitor healthcare load</li>
 </ul>
+
 <p><b>Key Components:</b></p>
+
 <ul>
 <li>MetricsCollector</li>
 </ul>
-</div>
 
-<div class="section">
-<h2>2.1.4 Visualization Package</h2>
+<h3>2.1.4 Visualization Package</h3>
+
 <p><b>Purpose:</b> Displays simulation results</p>
+
 <p><b>Responsibilities:</b></p>
+
 <ul>
 <li>Render charts</li>
 <li>Generate heatmaps</li>
 </ul>
+
 <p><b>Key Components:</b></p>
+
 <ul>
 <li>VisualizationEngine</li>
 </ul>
-</div>
 
-<div class="section">
-<h2>2.1.5 Scenario Manager Package</h2>
+<h3>2.1.5 Scenario Manager Package</h3>
+
 <p><b>Purpose:</b> Manages simulation persistence</p>
+
 <p><b>Responsibilities:</b></p>
+
 <ul>
 <li>Save scenarios</li>
 <li>Load scenarios</li>
 </ul>
+
 <p><b>Key Components:</b></p>
+
 <ul>
 <li>ScenarioManager</li>
 </ul>
-</div>
 
-<div class="section">
-<h2>2.1.6 Report Generator Package</h2>
+<h3>2.1.6 Report Generator Package</h3>
+
 <p><b>Purpose:</b> Exports simulation data</p>
+
 <p><b>Responsibilities:</b></p>
+
 <ul>
 <li>Generate reports</li>
 <li>Export CSV/PDF</li>
 </ul>
+
 <p><b>Key Components:</b></p>
+
 <ul>
 <li>ReportGenerator</li>
 </ul>
-</div>
 
-<div class="section">
-<h2>2.1.7 UI Package</h2>
+<h3>2.1.7 UI Package</h3>
+
 <p><b>Purpose:</b> Handles user interaction</p>
+
 <p><b>Responsibilities:</b></p>
+
 <ul>
 <li>Display dashboard</li>
 <li>Handle user input</li>
 </ul>
+
 <p><b>Key Components:</b></p>
+
 <ul>
 <li>UIManager</li>
 <li>DashboardController</li>
 </ul>
-</div>
 
-<div class="section">
-<h2>2.1.8 Summary of Package Interactions</h2>
-<p>SimuCrisis operates on an event-driven update loop:</p>
+<h3>2.1.8 Summary of Package Interactions</h3>
+
+<p>
+SimuCrisis operates on an event-driven update loop:
+</p>
+
 <ol>
-<li>UI Layer captures user inputs.</li>
-<li>Policy Engine computes katsayı modifiers based on active interventions.</li>
-<li>Simulation Core solves the SEIR differential equations for the current timestep.</li>
-<li>Metrics Collector derives Rt and healthcare load from the updated state.</li>
-<li>Visualization Engine updates the charts and heatmaps for real-time feedback.</li>
+
+<li>
+UI Layer captures user inputs (parameter changes or policy triggers).
+</li>
+
+<li>
+Policy Engine computes katsayı (modifiers) based on active interventions.
+</li>
+
+<li>
+Simulation Core solves the SEIR differential equations for the current timestep using
+these modifiers.
+</li>
+
+<li>
+Metrics Collector derives Rt and healthcare load from the updated state.
+</li>
+
+<li>
+Visualization Engine updates the charts and heatmaps for real-time feedback.
+</li>
+
 </ol>
 
-<img class="report-img" src="./images/sequence_diagram.png" alt="Sequence Diagram">
+<div class="diagram">
+<img src="images/Ekran görüntüsü 2026-05-17 195703.png">
+<div class="caption">Figure-1 Sequence Diagram – Package Interactions</div>
 </div>
 
-<div class="section">
+<div class="page-break"></div>
+
 <h2>2.2 Subsystems and Components</h2>
 
 <h3>2.2.1 Hardware Components</h3>
+
 <p>Desktop computer</p>
 
 <h3>2.2.2 Software Components</h3>
-<p>Unity Engine<br>C#<br>Python<br>JSON</p>
+
+<p>
+Unity Engine<br>
+C#<br>
+Python<br>
+JSON
+</p>
 
 <h3>2.2.3 Operating System</h3>
+
 <p>Windows / macOS</p>
 
 <h3>2.2.4 Programming Languages</h3>
-<p>C#<br>Python</p>
-</div>
 
-<div class="section">
-<h2>2.2.5 Libraries / Frameworks</h2>
-<p>UnityEngine<br>System.Collections<br>JSON Serialization</p>
+<p>
+C#<br>
+Python
+</p>
 
-<h2>2.3 Software Architecture</h2>
-<p>The system follows a layered modular architecture:</p>
+<h3>2.2.5 Libraries / Frameworks</h3>
+
+<p>
+UnityEngine<br>
+System.Collections<br>
+JSON Serialization
+</p>
+
+<h3>2.3 Software Architecture</h3>
+
+<p>
+The system follows a layered modular architecture:
+</p>
+
 <ul>
 <li>UI Layer</li>
 <li>Core Layer</li>
 <li>Data Layer</li>
 </ul>
-<p>Core Layer manages simulation logic, UI handles interaction, and Data Layer manages persistence.</p>
 
-<h2>2.4 Development Environment</h2>
-<p>Unity Editor<br>Visual Studio / Rider<br>Git</p>
-</div>
+<p>
+Core Layer manages simulation logic, UI handles interaction, and Data Layer manages
+persistence.
+</p>
 
-<div class="section">
+<h3>2.4 Development Environment</h3>
+
+<p>
+Unity Editor<br>
+Visual Studio / Rider<br>
+Git
+</p>
+
+<div class="page-break"></div>
+
 <h2>3. Class Interfaces</h2>
 
-<img class="report-img" src="./images/class_interfaces.png" alt="Class Interfaces Diagram">
+<div class="diagram">
+<img src="images/Ekran görüntüsü 2026-05-17 195653.png">
+<div class="caption">Figure-2 Class Interfaces Diagram</div>
 </div>
 
-<div class="section">
-<h2>3.1 Simulation Core</h2>
+<h3>3.1 Simulation Core</h3>
+
 <p><b>Class:</b> SimulationCore (Inherits from MonoBehaviour)</p>
-<p><b>Attributes:</b></p>
-<ul>
-<li>private SEIRModel _currentModel: Reference to the active mathematical model.</li>
-<li>private List&lt;PopulationData&gt; _history: Buffer for historical run data.</li>
-</ul>
-<p><b>Methods:</b></p>
-<ul>
-<li>public void Initialize(SimulationConfig config): Loads initial population states and validates against negative values.</li>
-<li>public SimulationSnapshot UpdateStep(float deltaTime): Advances the ODE solver by a specific time step.</li>
-</ul>
-</div>
 
-<div class="section">
-<h2>3.2 Policy Engine</h2>
+<p><b>Attributes:</b></p>
+
+<ul>
+<li>
+private SEIRModel _currentModel: Reference to the active mathematical model.
+</li>
+
+<li>
+private List&lt;PopulationData&gt; _history: Buffer for historical run data.
+</li>
+</ul>
+
+<p><b>Methods:</b></p>
+
+<ul>
+
+<li>
+public void Initialize(SimulationConfig config): Loads initial population states
+(S, E, I, R) and validates against negative values.
+</li>
+
+<li>
+public SimulationSnapshot UpdateStep(float deltaTime): Advances the ODE
+(Ordinary Differential Equation) solver by a specific time step.
+</li>
+
+</ul>
+
+<h3>3.2 Policy Engine</h3>
+
 <p><b>Class:</b> PolicyEngine</p>
-<p><b>Attributes:</b></p>
-<ul>
-<li>private List&lt;IPolicy&gt; _activePolicies: A list of currently applied interventions.</li>
-</ul>
-<p><b>Methods:</b></p>
-<ul>
-<li>public ModifierSet ComputeModifiers(int currentTime): Returns multipliers based on active policies.</li>
-<li>public void ApplyPolicy(PolicyType type, float intensity): Triggers a new intervention event.</li>
-</ul>
-</div>
 
-<div class="section">
-<h2>3.3 Metrics Collector</h2>
+<p><b>Attributes:</b></p>
+
+<ul>
+<li>
+private List&lt;IPolicy&gt; _activePolicies: A list of currently applied interventions.
+</li>
+</ul>
+
+<p><b>Methods:</b></p>
+
+<ul>
+
+<li>
+public ModifierSet ComputeModifiers(int currentTime): Returns a set of multipliers
+that reduce transmission rates or increase recovery rates based on active policies.
+</li>
+
+<li>
+public void ApplyPolicy(PolicyType type, float intensity): Triggers a new intervention
+event.
+</li>
+
+</ul>
+
+<h3>3.3 Metrics Collector</h3>
+
 <p><b>Class:</b> MetricsCollector</p>
+
 <p><b>Attributes:</b></p>
+
 <p>rtValue: float</p>
-<p><b>Methods:</b></p>
-<p>CalculateRt()<br>CalculatePeak()</p>
-</div>
 
-<div class="section">
-<h2>3.4 Visualization Engine</h2>
+<p><b>Methods:</b></p>
+
+<p>
+CalculateRt()<br>
+CalculatePeak()
+</p>
+
+<h3>3.4 Visualization Engine</h3>
+
 <p><b>Class:</b> VisualizationEngine</p>
+
 <p><b>Attributes:</b></p>
+
 <p>chartData</p>
-<p><b>Methods:</b></p>
-<p>RenderCharts()<br>GenerateHeatmap()</p>
-</div>
 
-<div class="section">
-<h2>3.5 Scenario Manager</h2>
+<p><b>Methods:</b></p>
+
+<p>
+RenderCharts()<br>
+GenerateHeatmap()
+</p>
+
+<h3>3.5 Scenario Manager</h3>
+
 <p><b>Class:</b> ScenarioManager</p>
+
 <p><b>Methods:</b></p>
+
 <ul>
-<li>public string SaveScenario(ScenarioData data): Serializes current configurations into JSON format for local storage.</li>
-<li>public ScenarioData LoadScenario(string fileName): Deserializes JSON and performs Schema Validation.</li>
+
+<li>
+public string SaveScenario(ScenarioData data): Serializes current configurations into
+JSON format for local storage.
+</li>
+
+<li>
+public ScenarioData LoadScenario(string fileName): Deserializes JSON and performs
+Schema Validation to prevent corrupt data entry.
+</li>
+
 </ul>
-</div>
 
-<div class="section">
-<h2>3.6 Report Generator</h2>
+<h3>3.6 Report Generator</h3>
+
 <p><b>Class:</b> ReportGenerator</p>
-<p><b>Methods:</b></p>
-<p>GenerateReport()<br>ExportCSV()</p>
-</div>
 
-<div class="section">
-<h2>3.7 UI Manager</h2>
+<p><b>Methods:</b></p>
+
+<p>
+GenerateReport()<br>
+ExportCSV()
+</p>
+
+<h3>3.7 UI Manager</h3>
+
 <p><b>Class:</b> UIManager</p>
+
 <p><b>Methods:</b></p>
-<p>DisplayDashboard()<br>UpdateUI()</p>
-</div>
 
-<div class="section">
+<p>
+DisplayDashboard()<br>
+UpdateUI()
+</p>
+
+<div class="page-break"></div>
+
 <h2>4. Glossary</h2>
-<p><b>Heatmap:</b> Visualization of infection density</p>
-<p><b>Snapshot:</b> Simulation state at a timestep</p>
-<p><b>Policy:</b> User-defined intervention</p>
-</div>
 
-<div class="section">
+<p>
+<b>Heatmap:</b> Visualization of infection density
+</p>
+
+<p>
+<b>Snapshot:</b> Simulation state at a timestep
+</p>
+
+<p>
+<b>Policy:</b> User-defined intervention
+</p>
+
+<div class="page-break"></div>
+
 <h2>5. References</h2>
-<p>Unity Documentation<br>IEEE Standards<br>WHO & CDC Data Sources</p>
-</div>
+
+<p>Unity Documentation</p>
+<p>IEEE Standards</p>
+<p>WHO & CDC Data Sources</p>
 
 <div style="text-align:center;">
-<a class="button-link" href="./index.html">Back to Main Page</a>
+<a class="button-link" href="./index.html">
+Back to Main Page
+</a>
 </div>
 
 </div>
